@@ -31,4 +31,12 @@ public class WpUsersController {
   }
 
 
+
+  @GetMapping("/login")
+  @ApiOperation(value = "用户登录", notes = "用户登录")
+  public WpUsers login(Long id) {
+    WpUsers wpUsers = wpUsersService.selectByPrimaryKey(id);
+    return wpUsers;
+  }
+
 }
