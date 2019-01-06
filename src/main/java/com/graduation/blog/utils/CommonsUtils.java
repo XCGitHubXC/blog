@@ -112,7 +112,7 @@ public class CommonsUtils {
    *         {@code false}: 不匹配
    */
   public static boolean isMobileExact(CharSequence input) {
-    return isMatch(LibraConst.REGEX_MOBILE_EXACT, input);
+    return isMatch(BlogConst.REGEX_MOBILE_EXACT, input);
   }
 
   private static boolean isMatch(String regex, CharSequence input) {

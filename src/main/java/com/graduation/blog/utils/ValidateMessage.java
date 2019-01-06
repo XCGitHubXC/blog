@@ -2,8 +2,6 @@ package com.graduation.blog.utils;
 
 /**
  * 校验异常信息
- * 
- * @author lb
  *
  */
 public class ValidateMessage {

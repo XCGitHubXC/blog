@@ -5,7 +5,7 @@ package com.graduation.blog.utils;
  *
  * 常量
  */
-public class LibraConst {
+public class BlogConst {
 
   /**
    * 问询笔录存储的文件ID

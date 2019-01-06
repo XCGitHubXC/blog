@@ -3,7 +3,6 @@ package com.graduation.blog.utils;
 import org.apache.commons.lang3.StringUtils;
 
 public class AppException extends RuntimeException {
-  private static final long serialVersionUID = 8449738842423044010L;
 
   private ErrorCode code;
 

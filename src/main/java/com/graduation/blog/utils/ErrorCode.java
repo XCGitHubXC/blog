@@ -6,21 +6,12 @@ package com.graduation.blog.utils;
  * 2.登录模块 
  * 3.文件模块 
  * 4.后台管理模块
- * 
- * @author weibo
+ *
  *
  */
 public enum ErrorCode {
 
-  /**
-   * 案件正在后台流转，不允许操作状态
-   */
-  CASE_IS_WORK(4000),
 
-  /**
-   * 案件操作不被允许
-   */
-  CASE_CHANGE_REFUSE(4001),
 
   /**
    * (保留码) 表示未知异常
@@ -86,10 +77,6 @@ public enum ErrorCode {
    * 邮箱验证码错误
    */
   EMAIL_CODE_IS_WRONG(2006),
-  /**
-   *  EXCEL解析异常
-   */
-  EXCEL_INVALIDATED(2007),
   
   /**
    * 用户类型为空
@@ -109,8 +96,6 @@ public enum ErrorCode {
    * 字典类型
    */
   DICT_TYPE_IS_EMPTY(2011),
-  
-
 
   /* 文件模块 */
 
@@ -187,21 +172,8 @@ public enum ErrorCode {
   /**
    * 原手机号错误
    */
-  MOBILE_PHONE_OLD_IS_WRONG(4012),
+  MOBILE_PHONE_OLD_IS_WRONG(4012);
 
-  /**
-   * 审批流程重复
-   */
-  FLOW_EXISTS(5001),
-
-  /**
-   * 审批流程不岑在
-   */
-  FLOW_NOT_EXISTS(5001),
-  /**
-   * 不在操作时间中
-   * */
-  OUT_TIME_LIMIT(5002);
 
   private int value;
 
