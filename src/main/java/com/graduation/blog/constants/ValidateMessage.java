@@ -1,4 +1,4 @@
-package com.graduation.blog.utils;
+package com.graduation.blog.constants;
 
 /**
  * 校验异常信息

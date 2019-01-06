@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 /**
  * 错误信息解析，延用 @AbstractMessageInterpolator
  * 
- * @author lb
+ *
  *
  */
 public class ValidateMessageParser {

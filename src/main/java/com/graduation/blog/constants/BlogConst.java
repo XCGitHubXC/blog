@@ -1,7 +1,7 @@
-package com.graduation.blog.utils;
+package com.graduation.blog.constants;
 
 /**
- * Created by zli on 2018/5/3.
+ *
  *
  * 常量
  */
