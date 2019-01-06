@@ -12,3 +12,12 @@ jwt:
   expireMinutes:
     authToken: 300
     refreshToken: 360
+
+    
+file:
+  storage:
+    root:
+      dir: /data/fileStorage/libra/
+    tmp:
+      dir: /data/fileStorage/temp/libra/
+    prefix: /attachment/

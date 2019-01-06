@@ -1,7 +1,6 @@
 package com.graduation.blog.service.impl;
 
 import com.alibaba.fastjson.JSON;
-
 import com.graduation.blog.constants.ValidateMessage;
 import com.graduation.blog.dao.FileInfoMapper;
 import com.graduation.blog.domain.FileInfo;
@@ -23,28 +22,25 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- */
+
 @Service
 @Slf4j
-
 public class FileServiceImpl implements FileService {
 
-  @Resource
+  @Autowired
   private FileInfoMapper fileInfoMapper;
 
   @Value("${file.storage.root.dir}")

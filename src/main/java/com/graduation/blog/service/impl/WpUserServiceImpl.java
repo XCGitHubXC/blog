@@ -3,6 +3,7 @@ package com.graduation.blog.service.impl;
 import com.graduation.blog.dao.WpUsersMapper;
 import com.graduation.blog.domain.WpUsers;
 import com.graduation.blog.service.WpUsersService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,10 @@ public class WpUserServiceImpl implements WpUsersService {
   @Override
   public WpUsers selectByPrimaryKey(Long id) {
     return wpUsersMapper.selectByPrimaryKey(id);
+  }
+
+  @Override
+  public List<WpUsers> listWpUsers() {
+    return null;
   }
 }

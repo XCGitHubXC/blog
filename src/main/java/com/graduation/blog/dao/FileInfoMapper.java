@@ -2,8 +2,9 @@ package com.graduation.blog.dao;
 
 import com.graduation.blog.domain.FileInfo;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface FileInfoMapper {
 
   /**
