@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="68819567-7678-42fa-b3f2-8b93a2decad7" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/graduation/blog/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/graduation/blog/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/AppException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/AppException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/CommonsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/CommonsUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/LibraConst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/BlogConst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/ValidateMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/graduation/blog/utils/ValidateMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ValidationMessages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ValidationMessages.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -120,8 +113,8 @@
       <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/graduation/blog/security/WebSecurityConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="57" column="38" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
+            <state relative-caret-position="227">
+              <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -486,7 +479,7 @@
       <updated>1546587646589</updated>
       <workItem from="1546587651498" duration="357000" />
       <workItem from="1546588104474" duration="4391000" />
-      <workItem from="1546666253410" duration="10053000" />
+      <workItem from="1546666253410" duration="10318000" />
     </task>
     <task id="LOCAL-00001" summary="sss">
       <created>1546588178357</created>
@@ -523,11 +516,18 @@
       <option name="project" value="LOCAL" />
       <updated>1546752082165</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="加入jwt">
+      <created>1546774589148</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1546774589148</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14801000" />
+    <option name="totallyTimeSpent" value="15066000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -937,8 +937,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/graduation/blog/security/WebSecurityConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="57" column="38" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
+        <state relative-caret-position="227">
+          <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
