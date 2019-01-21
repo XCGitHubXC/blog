@@ -19,7 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Slf4j
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-  private static final String JWT_AUTH_TOKEN_KEY_NAME = "libraJWTToken";
+  private static final String JWT_AUTH_TOKEN_KEY_NAME = "Authorization";
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

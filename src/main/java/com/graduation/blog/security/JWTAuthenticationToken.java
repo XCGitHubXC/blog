@@ -8,7 +8,8 @@ public class JWTAuthenticationToken extends AbstractAuthenticationToken {
 
   private static final long serialVersionUID = 689177934199815232L;
   private String userId;
-  private String userName;
+  private String mobileNo;
+  private String email;
 
   private String jwtToken;
 
@@ -18,11 +19,12 @@ public class JWTAuthenticationToken extends AbstractAuthenticationToken {
     setAuthenticated(false);
   }
 
-  public JWTAuthenticationToken(String userId, String userName,
+  public JWTAuthenticationToken(String userId, String mobileNo, String email,
       Collection<? extends GrantedAuthority> authorities) {
     super(authorities);
     this.userId = userId;
-    this.userName = userName;
+    this.mobileNo = mobileNo;
+    this.email = email;
     super.setAuthenticated(true);
   }
 
@@ -42,15 +44,19 @@ public class JWTAuthenticationToken extends AbstractAuthenticationToken {
 
   @Override
   public Object getPrincipal() {
-    return userName;
+    return mobileNo;
   }
 
   public String getUserId() {
     return userId;
   }
 
-  public String getUserName() {
-    return userName;
+  public String getMobileNo() {
+    return mobileNo;
+  }
+
+  public String getEmail() {
+    return email;
   }
 
   public String getJwtToken() {

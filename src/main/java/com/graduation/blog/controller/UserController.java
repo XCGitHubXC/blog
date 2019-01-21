@@ -1,14 +1,23 @@
 package com.graduation.blog.controller;
 
 import com.graduation.blog.domain.User;
+import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
+import com.graduation.blog.domain.dto.LoginRequestDTO;
+import com.graduation.blog.domain.dto.LoginTokenResponseDTO;
+import com.graduation.blog.domain.dto.RefreshTokenRequestDTO;
+import com.graduation.blog.domain.dto.RefreshTokenResponseDTO;
+import com.graduation.blog.security.TokenGenerator;
 import com.graduation.blog.service.UserService;
 import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,19 +33,36 @@ public class UserController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private TokenGenerator tokenGenerator;
+
   @GetMapping("/select/{id}")
   @ApiOperation(value = "查询用户", notes = "查询用户")
-  public Result selectByPrimKey(@PathVariable("id") String id) {
+  public Result<User> selectByPrimKey(@PathVariable("id") String id) {
     User user = userService.selectUserById(id);
     return Result.success(user);
   }
 
 
+  /**
+   * 刷新token
+   */
+  @ApiOperation(value = "刷新token", notes = "刷新token")
+  @RequestMapping(value = "refreshToken", method = RequestMethod.POST)
+  public Result<RefreshTokenResponseDTO> refreshToken(@RequestBody @Valid RefreshTokenRequestDTO dto) {
+    RefreshTokenResponseDTO res = tokenGenerator.refreshToken(dto.getRefreshToken());
+    return Result.success(res);
+  }
 
-  @GetMapping("/login")
-  @ApiOperation(value = "用户登录", notes = "用户登录")
-  public User login(String id) {
-    return null;
+  /**
+   * 用户名密码登录
+   */
+  @ApiOperation(value = "用户名密码登录", notes = "用户名密码登录")
+  @RequestMapping(value = "login", method = RequestMethod.POST)
+  public Result<LoginTokenResponseDTO> login(@RequestBody @Valid LoginRequestDTO dto) {
+    LoginInfoResponseDTO loginInfo = userService.login(dto);
+    LoginTokenResponseDTO res = tokenGenerator.generateLoginToken(loginInfo);
+    return Result.success(res);
   }
 
 }

@@ -2,6 +2,7 @@ package com.graduation.blog.dao;
 
 
 import com.graduation.blog.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
 
@@ -16,4 +17,9 @@ public interface UserMapper {
   int updateByPrimaryKeySelective(User record);
 
   int updateByPrimaryKey(User record);
+
+  /**
+   * 用户名密码登录
+   */
+  User selectByLoginNameAndPwd(@Param("loginName")String loginName, @Param("password")String password);
 }

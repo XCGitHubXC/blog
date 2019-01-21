@@ -231,4 +231,10 @@
       version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="selectByLoginNameAndPwd" resultMap="BaseResultMap" >
+    select *
+		from user
+		where ( mobile_no =#{loginName} or email =#{loginName} )
+		and password = #{password}
+  </select>
 </mapper>

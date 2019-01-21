@@ -43,10 +43,9 @@ public class TokenGenerator {
    */
   public LoginTokenResponseDTO generateLoginToken(LoginInfoResponseDTO loginInfo) {
     Map<String, Object> claims = new HashMap<>();
-    claims.put("userId", loginInfo.getUserId());
-    claims.put("userName", loginInfo.getUserName());
-    claims.put("userType", loginInfo.getUserType());
-    claims.put("roles", loginInfo.getRoles());
+    claims.put("userId", loginInfo.getId());
+    claims.put("mobileNo", loginInfo.getMobileNo());
+    claims.put("email", loginInfo.getEmail());
 
     Date authTokenExpireTime =
         Java8DateUtil.getDate(LocalDateTime.now().plusMinutes(authTokenExpireMinutes));
@@ -97,8 +96,8 @@ public class TokenGenerator {
     }
     Map<String, Object> newClaims = Maps.newHashMap();
     newClaims.put("userId", claims.get("userId"));
-    newClaims.put("userName", claims.get("userName"));
-    newClaims.put("roles", claims.get("roles"));
+    newClaims.put("mobileNo", claims.get("mobileNo"));
+    newClaims.put("email", claims.get("email"));
 
     Date authTokenExpireTime =
         Java8DateUtil.getDate(LocalDateTime.now().plusMinutes(authTokenExpireMinutes));
@@ -135,12 +134,13 @@ public class TokenGenerator {
       throw new AppException(ErrorCode.USER_NOT_LOGIN);
     }
     String userId = String.valueOf(claims.get("userId"));
-    String userName = String.valueOf(claims.get("userName"));
+    String mobileNo = String.valueOf(claims.get("mobileNo"));
+    String email = String.valueOf(claims.get("email"));
     List<String> roles = (List<String>) claims.get("roles");
     List<GrantedAuthority> roleList = new ArrayList<GrantedAuthority>();
     if (roles != null) {
       roleList = AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()]));
     }
-    return new JWTAuthenticationToken(userId, userName, roleList);
+    return new JWTAuthenticationToken(userId, mobileNo, email, roleList);
   }
 }
