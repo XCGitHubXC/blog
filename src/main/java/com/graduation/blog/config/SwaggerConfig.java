@@ -42,7 +42,7 @@ public class SwaggerConfig {
     tokenPar.name("Authorization").description("令牌")
         .modelRef(new ModelRef("string"))
         .parameterType("header")
-        .required(false).build();
+        .required(true).build();
     pars.add(tokenPar.build());
     return new Docket(DocumentationType.SWAGGER_2).select()
         .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
