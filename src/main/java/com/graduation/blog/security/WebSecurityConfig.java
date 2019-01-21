@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     web.ignoring()
         .antMatchers(DefaultErrorController.ERROR_PATH, "/auth/**", "/common/**", "/api1/**",
             "/resources/static/**",
-            "/download*", "/wpUsers/select/**", "/swagger-ui.html", "/webjars/**",
+            "/download*", "/user/select/**", "/swagger-ui.html", "/webjars/**",
             "/swagger-resources/**", "/v2/**", "/api/areas/**",
             "/api/fileInfo/download/**", "/attachment/**");
   }

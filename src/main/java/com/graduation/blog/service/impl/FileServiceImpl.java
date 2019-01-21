@@ -176,8 +176,8 @@ public class FileServiceImpl implements FileService {
       }
       fileInfo.setPlatformSource(PlatformEnum.WEB.getCode());
     });
-
-    fileInfoMapper.insertList(list);
+    // 需要修改
+    // fileInfoMapper.insertList(list);
   }
 
   /**
@@ -189,6 +189,7 @@ public class FileServiceImpl implements FileService {
     return fileInfoMapper.selectByPrimaryKey(id);
   }
 
+  @Override
   @Transactional(rollbackFor = Exception.class)
   public boolean logicalDeleteFile(String fileId) {
     Assert.isNotEmpty(fileId, ErrorCode.ILLEGAL_PARAMETER, ValidateMessage.PARAMETER_IS_NULL);
@@ -197,8 +198,8 @@ public class FileServiceImpl implements FileService {
     fileInfo.setStatus(StatusEnum.DELETE.getCode());
     fileInfo.setId(fileId);
     log.info(JSON.toJSONString(fileInfo));
-    // 删除文件
-    fileInfoMapper.updateByIdSelective(fileInfo);
+    // 删除文件需要修改
+    // fileInfoMapper.updateByIdSelective(fileInfo);
     return true;
   }
 

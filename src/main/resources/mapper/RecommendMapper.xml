@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.graduation.blog.dao.FileInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.graduation.blog.domain.FileInfo" >
+<mapper namespace="com.graduation.blog.dao.RecommendMapper" >
+  <resultMap id="BaseResultMap" type="com.graduation.blog.domain.Recommend" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="file_path" property="filePath" jdbcType="VARCHAR" />
-    <result column="origin_file_name" property="originFileName" jdbcType="VARCHAR" />
-    <result column="remote_file_name" property="remoteFileName" jdbcType="VARCHAR" />
-    <result column="platform_source" property="platformSource" jdbcType="CHAR" />
-    <result column="file_size" property="fileSize" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
@@ -15,54 +12,42 @@
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="version" property="version" jdbcType="INTEGER" />
-    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, file_path, origin_file_name, remote_file_name, platform_source, file_size, status, 
-    remark, create_user, create_time, update_user, update_time, version, file_url
+    id, article_id, user_id, status, remark, create_user, create_time, update_user, update_time, 
+    version
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from file_info
+    from recommend
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from file_info
+    delete from recommend
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.graduation.blog.domain.FileInfo" >
-    insert into file_info (id, file_path, origin_file_name, 
-      remote_file_name, platform_source, file_size, 
+  <insert id="insert" parameterType="com.graduation.blog.domain.Recommend" >
+    insert into recommend (id, article_id, user_id, 
       status, remark, create_user, 
       create_time, update_user, update_time, 
-      version, file_url)
-    values (#{id,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{originFileName,jdbcType=VARCHAR}, 
-      #{remoteFileName,jdbcType=VARCHAR}, #{platformSource,jdbcType=CHAR}, #{fileSize,jdbcType=VARCHAR}, 
+      version)
+    values (#{id,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{version,jdbcType=INTEGER}, #{fileUrl,jdbcType=VARCHAR})
+      #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.graduation.blog.domain.FileInfo" >
-    insert into file_info
+  <insert id="insertSelective" parameterType="com.graduation.blog.domain.Recommend" >
+    insert into recommend
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="filePath != null" >
-        file_path,
+      <if test="articleId != null" >
+        article_id,
       </if>
-      <if test="originFileName != null" >
-        origin_file_name,
-      </if>
-      <if test="remoteFileName != null" >
-        remote_file_name,
-      </if>
-      <if test="platformSource != null" >
-        platform_source,
-      </if>
-      <if test="fileSize != null" >
-        file_size,
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="status != null" >
         status,
@@ -85,28 +70,16 @@
       <if test="version != null" >
         version,
       </if>
-      <if test="fileUrl != null" >
-        file_url,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="filePath != null" >
-        #{filePath,jdbcType=VARCHAR},
+      <if test="articleId != null" >
+        #{articleId,jdbcType=VARCHAR},
       </if>
-      <if test="originFileName != null" >
-        #{originFileName,jdbcType=VARCHAR},
-      </if>
-      <if test="remoteFileName != null" >
-        #{remoteFileName,jdbcType=VARCHAR},
-      </if>
-      <if test="platformSource != null" >
-        #{platformSource,jdbcType=CHAR},
-      </if>
-      <if test="fileSize != null" >
-        #{fileSize,jdbcType=VARCHAR},
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
@@ -129,28 +102,16 @@
       <if test="version != null" >
         #{version,jdbcType=INTEGER},
       </if>
-      <if test="fileUrl != null" >
-        #{fileUrl,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduation.blog.domain.FileInfo" >
-    update file_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduation.blog.domain.Recommend" >
+    update recommend
     <set >
-      <if test="filePath != null" >
-        file_path = #{filePath,jdbcType=VARCHAR},
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=VARCHAR},
       </if>
-      <if test="originFileName != null" >
-        origin_file_name = #{originFileName,jdbcType=VARCHAR},
-      </if>
-      <if test="remoteFileName != null" >
-        remote_file_name = #{remoteFileName,jdbcType=VARCHAR},
-      </if>
-      <if test="platformSource != null" >
-        platform_source = #{platformSource,jdbcType=CHAR},
-      </if>
-      <if test="fileSize != null" >
-        file_size = #{fileSize,jdbcType=VARCHAR},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
@@ -173,27 +134,20 @@
       <if test="version != null" >
         version = #{version,jdbcType=INTEGER},
       </if>
-      <if test="fileUrl != null" >
-        file_url = #{fileUrl,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.graduation.blog.domain.FileInfo" >
-    update file_info
-    set file_path = #{filePath,jdbcType=VARCHAR},
-      origin_file_name = #{originFileName,jdbcType=VARCHAR},
-      remote_file_name = #{remoteFileName,jdbcType=VARCHAR},
-      platform_source = #{platformSource,jdbcType=CHAR},
-      file_size = #{fileSize,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.graduation.blog.domain.Recommend" >
+    update recommend
+    set article_id = #{articleId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      version = #{version,jdbcType=INTEGER},
-      file_url = #{fileUrl,jdbcType=VARCHAR}
+      version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
