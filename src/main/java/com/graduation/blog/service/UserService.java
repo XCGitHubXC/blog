@@ -12,7 +12,9 @@ import java.util.List;
  **/
 public interface UserService {
 
-
+  /**
+   * id 查询
+   */
   User selectUserById(String id);
 
   /**

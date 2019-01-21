@@ -21,179 +21,206 @@
     id, file_path, origin_file_name, remote_file_name, platform_source, file_size, status, 
     remark, create_user, create_time, update_user, update_time, version, file_url
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+    parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
     from file_info
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from file_info
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.graduation.blog.domain.FileInfo" >
-    insert into file_info (id, file_path, origin_file_name, 
-      remote_file_name, platform_source, file_size, 
-      status, remark, create_user, 
-      create_time, update_user, update_time, 
-      version, file_url)
-    values (#{id,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{originFileName,jdbcType=VARCHAR}, 
-      #{remoteFileName,jdbcType=VARCHAR}, #{platformSource,jdbcType=CHAR}, #{fileSize,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{version,jdbcType=INTEGER}, #{fileUrl,jdbcType=VARCHAR})
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from file_info
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+  <insert id="insert" parameterType="com.graduation.blog.domain.FileInfo">
+		insert into file_info (id, file_path,
+		origin_file_name, remote_file_name, platform_source,
+		file_size, status, remark,
+		create_user, create_time, update_user,
+		update_time, version,file_url)
+		values (#{id,jdbcType=BIGINT},
+		#{filePath,jdbcType=VARCHAR},
+		#{originFileName,jdbcType=VARCHAR}, #{remoteFileName,jdbcType=VARCHAR},
+		#{platformSource,jdbcType=VARCHAR},
+		#{fileSize,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+		#{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateUser,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER},#{fileUrl})
+	</insert>
+  <!-- 批量插入文件信息 -->
+  <insert id="insertList" parameterType="java.util.List">
+    insert into file_info ( id, file_path,
+    origin_file_name, remote_file_name, platform_source,
+    file_size, status, remark,
+    create_user, create_time, update_user,
+    update_time, version,file_url)
+    values
+    <foreach collection="list" index="index" item="item" open="" close="" separator=",">
+      ( #{item.id,jdbcType=VARCHAR},
+      #{item.filePath,jdbcType=VARCHAR},
+      #{item.originFileName,jdbcType=VARCHAR}, #{item.remoteFileName,jdbcType=VARCHAR},
+      #{item.platformSource,jdbcType=VARCHAR},
+      #{item.fileSize,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR},
+      #{item.remark,jdbcType=VARCHAR},
+      #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateUser,jdbcType=VARCHAR},
+      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.version,jdbcType=INTEGER},#{item.fileUrl})
+    </foreach>
   </insert>
-  <insert id="insertSelective" parameterType="com.graduation.blog.domain.FileInfo" >
+  <insert id="insertSelective" parameterType="com.graduation.blog.domain.FileInfo">
     insert into file_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="filePath != null" >
+      <if test="filePath != null">
         file_path,
       </if>
-      <if test="originFileName != null" >
+      <if test="originFileName != null">
         origin_file_name,
       </if>
-      <if test="remoteFileName != null" >
+      <if test="remoteFileName != null">
         remote_file_name,
       </if>
-      <if test="platformSource != null" >
+      <if test="platformSource != null">
         platform_source,
       </if>
-      <if test="fileSize != null" >
+      <if test="fileSize != null">
         file_size,
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         status,
       </if>
-      <if test="remark != null" >
+      <if test="remark != null">
         remark,
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         create_user,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         update_user,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time,
       </if>
-      <if test="version != null" >
+      <if test="version != null">
         version,
       </if>
-      <if test="fileUrl != null" >
-        file_url,
+      <if test="fileUrl != null">
+        file_url
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
       </if>
-      <if test="filePath != null" >
+      <if test="filePath != null">
         #{filePath,jdbcType=VARCHAR},
       </if>
-      <if test="originFileName != null" >
+      <if test="originFileName != null">
         #{originFileName,jdbcType=VARCHAR},
       </if>
-      <if test="remoteFileName != null" >
+      <if test="remoteFileName != null">
         #{remoteFileName,jdbcType=VARCHAR},
       </if>
-      <if test="platformSource != null" >
-        #{platformSource,jdbcType=CHAR},
+      <if test="platformSource != null">
+        #{platformSource,jdbcType=VARCHAR},
       </if>
-      <if test="fileSize != null" >
+      <if test="fileSize != null">
         #{fileSize,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
+      <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="version != null" >
+      <if test="version != null">
         #{version,jdbcType=INTEGER},
       </if>
-      <if test="fileUrl != null" >
-        #{fileUrl,jdbcType=VARCHAR},
+      <if test="fileUrl != null">
+        #{fileUrl}
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduation.blog.domain.FileInfo" >
+  <sql id="updateSelectiveHandler">
     update file_info
-    <set >
-      <if test="filePath != null" >
+    <set>
+      <if test="filePath != null">
         file_path = #{filePath,jdbcType=VARCHAR},
       </if>
-      <if test="originFileName != null" >
+      <if test="originFileName != null">
         origin_file_name = #{originFileName,jdbcType=VARCHAR},
       </if>
-      <if test="remoteFileName != null" >
+      <if test="remoteFileName != null">
         remote_file_name = #{remoteFileName,jdbcType=VARCHAR},
       </if>
-      <if test="platformSource != null" >
-        platform_source = #{platformSource,jdbcType=CHAR},
+      <if test="platformSource != null">
+        platform_source = #{platformSource,jdbcType=VARCHAR},
       </if>
-      <if test="fileSize != null" >
+      <if test="fileSize != null">
         file_size = #{fileSize,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
+      <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         create_user = #{createUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="version != null" >
-        version = #{version,jdbcType=INTEGER},
-      </if>
-      <if test="fileUrl != null" >
-        file_url = #{fileUrl,jdbcType=VARCHAR},
-      </if>
+      version = (version + 1)
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+  </sql>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduation.blog.domain.FileInfo">
+    <include refid="updateSelectiveHandler"/>
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.graduation.blog.domain.FileInfo" >
-    update file_info
-    set file_path = #{filePath,jdbcType=VARCHAR},
-      origin_file_name = #{originFileName,jdbcType=VARCHAR},
-      remote_file_name = #{remoteFileName,jdbcType=VARCHAR},
-      platform_source = #{platformSource,jdbcType=CHAR},
-      file_size = #{fileSize,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_user = #{createUser,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_user = #{updateUser,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      version = #{version,jdbcType=INTEGER},
-      file_url = #{fileUrl,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.graduation.blog.domain.FileInfo">
+		update file_info
+		set
+		file_path = #{filePath,jdbcType=VARCHAR},
+		origin_file_name = #{originFileName,jdbcType=VARCHAR},
+		remote_file_name = #{remoteFileName,jdbcType=VARCHAR},
+		platform_source = #{platformSource,jdbcType=VARCHAR},
+		file_size = #{fileSize,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		create_user = #{createUser,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_user = #{updateUser,jdbcType=VARCHAR},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		version = #{version,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+  <!-- 根据文件ID有选择的更新 -->
+  <update id="updateByIdSelective" parameterType="com.graduation.blog.domain.FileInfo">
+    <include refid="updateSelectiveHandler"/>
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

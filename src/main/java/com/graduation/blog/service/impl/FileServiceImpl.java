@@ -176,8 +176,7 @@ public class FileServiceImpl implements FileService {
       }
       fileInfo.setPlatformSource(PlatformEnum.WEB.getCode());
     });
-    // 需要修改
-    // fileInfoMapper.insertList(list);
+    fileInfoMapper.insertList(list);
   }
 
   /**
@@ -198,8 +197,8 @@ public class FileServiceImpl implements FileService {
     fileInfo.setStatus(StatusEnum.DELETE.getCode());
     fileInfo.setId(fileId);
     log.info(JSON.toJSONString(fileInfo));
-    // 删除文件需要修改
-    // fileInfoMapper.updateByIdSelective(fileInfo);
+    // 删除文件
+    fileInfoMapper.updateByIdSelective(fileInfo);
     return true;
   }
 

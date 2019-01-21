@@ -1,19 +1,10 @@
 package com.graduation.blog.dao;
 
 
+import com.graduation.blog.base.MyMapper;
 import com.graduation.blog.domain.Recommend;
 
-public interface RecommendMapper {
+public interface RecommendMapper extends MyMapper<Recommend> {
 
-  int deleteByPrimaryKey(String id);
 
-  int insert(Recommend record);
-
-  int insertSelective(Recommend record);
-
-  Recommend selectByPrimaryKey(String id);
-
-  int updateByPrimaryKeySelective(Recommend record);
-
-  int updateByPrimaryKey(Recommend record);
 }

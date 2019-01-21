@@ -7,18 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper extends MyMapper<User> {
 
-//  int deleteByPrimaryKey(String id);
-//
-//  int insert(User record);
-//
-//  int insertSelective(User record);
-//
-//  User selectByPrimaryKey(String id);
-//
-//  int updateByPrimaryKeySelective(User record);
-//
-//  int updateByPrimaryKey(User record);
-
   /**
    * 用户名密码登录
    */
