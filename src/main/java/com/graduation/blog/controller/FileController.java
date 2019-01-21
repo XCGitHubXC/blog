@@ -67,6 +67,19 @@ public class FileController {
   }
 
   /**
+   * 文件预览
+   */
+  @GetMapping("preview/{fileId}")
+  @ApiOperation(value = "文件预览接口", notes = "文件预览接口")
+  public void previewFile(
+      @ApiParam(value = "附件id") @Valid @NotEmpty(
+          message = ValidateMessage.FILE_NOT_FOUND) @PathVariable("fileId") String fileId,
+      HttpServletResponse response, HttpServletRequest request) throws Exception {
+    this.fileService.preview(fileId, response, request);
+  }
+
+
+  /**
    * 上传文件接口
    *
    * @param file 文件

@@ -265,6 +265,39 @@ public class FileServiceImpl implements FileService {
   }
 
   @Override
+  public void preview(String fileId, HttpServletResponse response, HttpServletRequest request)
+      throws Exception {
+    FileInfo bean = this.fileInfoMapper.selectByPrimaryKey(fileId);
+    Assert.isNotNull(bean, ErrorCode.ILLEGAL_PARAMETER, ValidateMessage.FILE_NOT_FOUND);
+    File file = new File(bean.getFilePath());
+    String filename = bean.getOriginFileName();
+    Assert.isTrue(file.exists(), ErrorCode.ILLEGAL_PARAMETER, ValidateMessage.FILE_NOT_FOUND);
+    byte[] buffer = new byte[1024];
+    FileInputStream fis = null;
+    BufferedInputStream bis = null;
+    try {
+      /* 解决中文文件名称的问题 */
+      String filenameIso = encodeName(request, filename);
+      /* 设置文件名 */
+      response.addHeader("Content-Disposition", "inline;fileName=" + filenameIso);
+      fis = new FileInputStream(file);
+      bis = new BufferedInputStream(fis);
+      OutputStream os = response.getOutputStream();
+      int i = bis.read(buffer);
+      while (i != -1) {
+        os.write(buffer, 0, i);
+        i = bis.read(buffer);
+      }
+    } catch (Exception e) {
+      throw new AppException(ErrorCode.UNEXCEPTED, e.getMessage());
+    } finally {
+      /* 关闭流 */
+      IOUtils.closeQuietly(bis);
+      IOUtils.closeQuietly(fis);
+    }
+  }
+
+  @Override
   @Transactional(rollbackFor = Exception.class)
   public List<FileUploadResponseDTO> multipleUpload(MultipartFile[] file, String remark,
       HttpServletRequest request)

@@ -23,7 +23,10 @@ jwt:
 file:
   storage:
     root:
-      dir: /data/fileStorage/libra/
+      dir: C:/data/fileStorage/blog/
     tmp:
-      dir: /data/fileStorage/temp/libra/
+      dir: /data/fileStorage/temp/blog/
     prefix: /attachment/
+    document:
+      dir: /data/document/
+      pdfUrl: http://localhost:8080

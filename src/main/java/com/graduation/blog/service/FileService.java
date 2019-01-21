@@ -83,6 +83,12 @@ public interface FileService {
       throws Exception;
 
   /**
+   * 下载统一service接口 * @param fileId
+   */
+  void preview(String fileId, HttpServletResponse response, HttpServletRequest request)
+      throws Exception;
+
+  /**
    * 批量上传多个文件
    *
    * @param file 文件
