@@ -11,6 +11,7 @@ import com.graduation.blog.service.UserService;
 import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,13 @@ public class UserController {
     return Result.success(user);
   }
 
+
+  @GetMapping("/select/allUser")
+  @ApiOperation(value = "查询所有用户", notes = "查询所有用户")
+  public Result<List<User>> selectByPrimKey() {
+    List<User> users = userService.listUser();
+    return Result.success(users);
+  }
 
   /**
    * 刷新token

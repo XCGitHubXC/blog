@@ -10,6 +10,7 @@ import com.graduation.blog.utils.Assert;
 import com.graduation.blog.utils.BeanConvertUtils;
 import com.graduation.blog.utils.Encrypt;
 import com.graduation.blog.utils.ErrorCode;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,10 @@ public class UserServiceImpl implements UserService {
     LoginInfoResponseDTO loginInfoResponseDTO = BeanConvertUtils
         .copyBean(user, LoginInfoResponseDTO.class);
     return loginInfoResponseDTO;
+  }
+
+  @Override
+  public List<User> listUser() {
+    return userMapper.selectAll();
   }
 }

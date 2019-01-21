@@ -6,6 +6,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.graduation.blog.domain
+
+mapper:
+ mappers: com.graduation.blog.base.MyMapper
+ identity: mysql
+
 
 jwt:
   secret: dfskfsfsd
