@@ -68,6 +68,10 @@ public class ValidateMessage {
   public static final String WXCODE_NOT_BLANK = "{wxcode.notBlank}";
 
   // 注册
+  /** 手机号已经注册 */
+  public static final String MOBILE_EXITS = "{userMobile.exist}";
+  /** 邮箱已经注册 */
+  public static final String EMAIL_EXITS = "{userEmail.exist}";
   /** 用户id不能为空 */
   public static final String USER_ID_NOT_BLANK = "{userId.notBlank}";
   /** 用户名不存在 */

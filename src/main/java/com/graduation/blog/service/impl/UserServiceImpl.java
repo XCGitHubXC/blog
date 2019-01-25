@@ -64,6 +64,12 @@ public class UserServiceImpl implements UserService {
   @Transactional(rollbackFor = Exception.class)
   public void userRegister(RegisterRequestDTO dto) {
     User user = BeanConvertUtils.copyBean(dto, User.class);
+    String mobileNo = user.getMobileNo();
+    String email = user.getEmail();
+    User mobileUser = userMapper.selectByLoginName(mobileNo);
+    Assert.isNull(mobileUser, ErrorCode.MOBILE_EXITS, ValidateMessage.MOBILE_EXITS);
+    User emailUser = userMapper.selectByLoginName(email);
+    Assert.isNull(emailUser, ErrorCode.EMAIL_EXITS, ValidateMessage.EMAIL_EXITS);
     String md5Password = Encrypt.md5(dto.getPassword());
     user.setPassword(md5Password);
     user.setId(CommonsUtils.get32BitUUID());

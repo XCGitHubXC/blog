@@ -91,7 +91,18 @@ public enum ErrorCode {
    * 手机号为空
    */
   MOBILE_PHONE_IS_EMPTY(2010),
-  
+
+  /**
+   * 手机号码已经注册
+   */
+  MOBILE_EXITS(2011),
+
+  /**
+   * 手机号码已经注册
+   */
+  EMAIL_EXITS(2012),
+
+
   /**
    * 字典类型
    */
@@ -123,11 +134,6 @@ public enum ErrorCode {
   
 
   /* 后台管理模块 */
-  
-  /**
-   * 手机号码已经存在
-   */
-  MOBILE_EXITS(4001),
   
   /**
    * 身份证和姓名不匹配
