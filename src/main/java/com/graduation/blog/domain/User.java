@@ -1,8 +1,12 @@
 package com.graduation.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * @Author :xiachuan
  * @Date :2019/1/21
@@ -65,6 +69,31 @@ public class User extends BaseObject {
    */
   @ApiModelProperty(value = "权限")
   private String authority;
+
+  /**
+   * 头像图片id
+   */
+  @ApiModelProperty(value = "头像图片id")
+  private String fileId;
+
+  /**
+   * 性别
+   */
+  @ApiModelProperty(value = "[(0 女生),(1 男生)]")
+  private String gender;
+
+  /**
+   * 生日
+   */
+  @ApiModelProperty(value = "生日")
+  private Date birthday;
+
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  public Date getBirthday() {
+    return birthday;
+  }
 
 
 }

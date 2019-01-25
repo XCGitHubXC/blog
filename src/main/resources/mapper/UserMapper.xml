@@ -12,6 +12,9 @@
     <result column="region" property="region" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="authority" property="authority" jdbcType="VARCHAR" />
+    <result column="file_id" property="fileId" jdbcType="VARCHAR"/>
+    <result column="gender" property="gender" jdbcType="VARCHAR"/>
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
@@ -21,7 +24,7 @@
     <result column="version" property="version" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, mobile_no, email, name, summary, signature, profession, region, password, authority, 
+    id, mobile_no, email, name, summary, signature, profession, region, password, authority, file_id,
     status, remark, create_user, create_time, update_user, update_time, version
   </sql>
 

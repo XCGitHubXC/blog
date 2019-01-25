@@ -4,6 +4,7 @@ import com.graduation.blog.constants.ValidateMessage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -72,5 +73,18 @@ public class RegisterRequestDTO implements Serializable {
   @ApiModelProperty(value = "登录密码", required = true)
   @NotBlank(message = ValidateMessage.PASSWORD_NOT_BLANK)
   private String password;
+
+
+  /**
+   * 性别
+   */
+  @ApiModelProperty(value = "[(0 女生),(1 男生)]")
+  private String gender;
+
+  /**
+   * 生日
+   */
+  @ApiModelProperty(value = "生日")
+  private Date birthday;
 
 }

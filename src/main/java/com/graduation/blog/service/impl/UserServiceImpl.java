@@ -1,5 +1,6 @@
 package com.graduation.blog.service.impl;
 
+import com.google.common.base.Strings;
 import com.graduation.blog.constants.ValidateMessage;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.User;
@@ -77,6 +78,13 @@ public class UserServiceImpl implements UserService {
     String md5Password = Encrypt.md5(dto.getPassword());
     user.setPassword(md5Password);
     user.setId(CommonsUtils.get32BitUUID());
+    String gender = user.getGender();
+    // 女生头像
+    if (Strings.isNullOrEmpty(gender) && "0".equals(gender)) {
+      user.setFileId("d4e6da7087854d3cae5664ee663ca635");
+    } else {
+      user.setFileId("648a3e9dd70244ffb1626d653e6c820d");
+    }
     // 普通用户
     user.setAuthority("0");
     int insert = userMapper.insert(user);
