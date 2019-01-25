@@ -18,6 +18,7 @@ import com.graduation.blog.utils.CommonsUtils;
 import com.graduation.blog.utils.Encrypt;
 import com.graduation.blog.utils.ErrorCode;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @Description:
  **/
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   @Autowired
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public LoginInfoResponseDTO login(LoginRequestDTO dto) {
+    log.debug("登录请求参数:{}", dto);
     // 获取前台参数
     String password = dto.getPassword();
     String loginName = dto.getLoginName();
@@ -53,6 +56,7 @@ public class UserServiceImpl implements UserService {
     password = Encrypt.md5(password);
     User user = userMapper.selectByLoginNameAndPwd(loginName, password);
     Assert.isNotNull(user, ErrorCode.PASSWORD_IS_WRONG, ValidateMessage.PASSWORD_IS_WRONG);
+    log.debug("登录成功");
     // 组装dto
     return BeanConvertUtils
         .copyBean(user, LoginInfoResponseDTO.class);
@@ -66,6 +70,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional(rollbackFor = Exception.class)
   public void userRegister(RegisterRequestDTO dto) {
+    log.debug("注册请求参数:{}", dto);
     User user = BeanConvertUtils.copyBean(dto, User.class);
     String mobileNo = user.getMobileNo();
     String email = user.getEmail();
@@ -91,11 +96,13 @@ public class UserServiceImpl implements UserService {
     if (1 != insert) {
       throw new AppException(ErrorCode.FAIL_DATABASE, "注册失败");
     }
+    log.debug("注册成功");
   }
 
   @Override
   @Transactional(rollbackFor = Exception.class)
   public void userPwdUpdate(UserPwdUpdateRequestDTO dto, String userId) {
+    log.debug("密码修改开始");
     User user = new User();
     user.setId(userId);
     List<User> select = userMapper.select(user);
@@ -107,7 +114,7 @@ public class UserServiceImpl implements UserService {
     }
     user.setPassword(Encrypt.md5(dto.getNewPassowrd()));
     userMapper.updateByPrimaryKeySelective(user);
-
+    log.debug("密码修改成功");
   }
 
   @Override
