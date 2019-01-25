@@ -1,9 +1,12 @@
 package com.graduation.blog.domain.dto.requestdto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 用户信息修改dto
@@ -50,5 +53,27 @@ public class UserMsgUpdateRequestDTO implements Serializable {
   @ApiModelProperty(value = "地区")
   private String region;
 
+  /**
+   * 头像图片id
+   */
+  @ApiModelProperty(value = "头像图片id")
+  private String fileId;
 
+  /**
+   * 性别
+   */
+  @ApiModelProperty(value = "[(0 女生),(1 男生)]")
+  private String gender;
+
+  /**
+   * 生日
+   */
+  @ApiModelProperty(value = "生日")
+  private Date birthday;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
 }

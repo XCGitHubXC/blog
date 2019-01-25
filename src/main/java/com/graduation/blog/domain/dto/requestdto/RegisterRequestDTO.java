@@ -1,5 +1,6 @@
 package com.graduation.blog.domain.dto.requestdto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.graduation.blog.constants.ValidateMessage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 用户注册dto
@@ -86,5 +88,13 @@ public class RegisterRequestDTO implements Serializable {
    */
   @ApiModelProperty(value = "生日")
   private Date birthday;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+
 
 }
