@@ -5,6 +5,8 @@ package com.graduation.blog.enums;
  *
  */
 public enum PlatformEnum {
+
+  // 平台类型
   WEB("0", "网页"),
   WECHAT("1", "小程序"),
   MANAGE("2", "后台生成"),

@@ -6,6 +6,7 @@ package com.graduation.blog.enums;
  */
 public enum StatusEnum {
 
+  // 状态枚举类型
   USED("0", "使用"), DELETE("1", "删除");
 
   private String code;
