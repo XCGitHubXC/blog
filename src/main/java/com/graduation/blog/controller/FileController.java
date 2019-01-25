@@ -1,7 +1,7 @@
 package com.graduation.blog.controller;
 
 import com.graduation.blog.constants.ValidateMessage;
-import com.graduation.blog.domain.dto.FileUploadResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.FileUploadResponseDTO;
 import com.graduation.blog.service.FileService;
 import com.graduation.blog.utils.Assert;
 import com.graduation.blog.utils.ErrorCode;

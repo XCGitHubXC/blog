@@ -1,9 +1,11 @@
 package com.graduation.blog.service;
 
 import com.graduation.blog.domain.User;
-import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
-import com.graduation.blog.domain.dto.LoginRequestDTO;
-import com.graduation.blog.domain.dto.RegisterRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.UserMsgUpdateRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.UserPwdUpdateRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
+import com.graduation.blog.domain.dto.requestdto.LoginRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.RegisterRequestDTO;
 import java.util.List;
 
 /**
@@ -33,6 +35,17 @@ public interface UserService {
    */
   void userRegister(RegisterRequestDTO dto);
 
+
+  /**
+   * 用户密码修改
+   */
+  void userPwdUpdate(UserPwdUpdateRequestDTO dto, String userId);
+
+
+  /**
+   * 用户信息修改
+   */
+  void userMsgUpdate(UserMsgUpdateRequestDTO dto, String userId);
 
 
 }

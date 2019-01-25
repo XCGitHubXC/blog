@@ -3,9 +3,11 @@ package com.graduation.blog.service.impl;
 import com.graduation.blog.constants.ValidateMessage;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.User;
-import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
-import com.graduation.blog.domain.dto.LoginRequestDTO;
-import com.graduation.blog.domain.dto.RegisterRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.LoginRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.RegisterRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.UserMsgUpdateRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.UserPwdUpdateRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
 import com.graduation.blog.enums.PlatformEnum;
 import com.graduation.blog.service.UserService;
 import com.graduation.blog.utils.AppException;
@@ -15,6 +17,7 @@ import com.graduation.blog.utils.CommonsUtils;
 import com.graduation.blog.utils.Encrypt;
 import com.graduation.blog.utils.ErrorCode;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,9 +53,8 @@ public class UserServiceImpl implements UserService {
     User user = userMapper.selectByLoginNameAndPwd(loginName, password);
     Assert.isNotNull(user, ErrorCode.PASSWORD_IS_WRONG, ValidateMessage.PASSWORD_IS_WRONG);
     // 组装dto
-    LoginInfoResponseDTO loginInfoResponseDTO = BeanConvertUtils
+    return BeanConvertUtils
         .copyBean(user, LoginInfoResponseDTO.class);
-    return loginInfoResponseDTO;
   }
 
   @Override
@@ -67,8 +69,10 @@ public class UserServiceImpl implements UserService {
     String mobileNo = user.getMobileNo();
     String email = user.getEmail();
     User mobileUser = userMapper.selectByLoginName(mobileNo);
+    // 手机号已经注册
     Assert.isNull(mobileUser, ErrorCode.MOBILE_EXITS, ValidateMessage.MOBILE_EXITS);
     User emailUser = userMapper.selectByLoginName(email);
+    // 邮箱已经注册
     Assert.isNull(emailUser, ErrorCode.EMAIL_EXITS, ValidateMessage.EMAIL_EXITS);
     String md5Password = Encrypt.md5(dto.getPassword());
     user.setPassword(md5Password);
@@ -79,5 +83,33 @@ public class UserServiceImpl implements UserService {
     if (1 != insert) {
       throw new AppException(ErrorCode.FAIL_DATABASE, "注册失败");
     }
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void userPwdUpdate(UserPwdUpdateRequestDTO dto, String userId) {
+    User user = new User();
+    user.setId(userId);
+    List<User> select = userMapper.select(user);
+    user = select.get(0);
+    String password = user.getPassword();
+    String oldPassword = Encrypt.md5(dto.getOldPassword());
+    if (!password.equals(oldPassword)) {
+      throw new AppException(ErrorCode.PASSWORD_IS_WRONG, "原密码错误");
+    }
+    user.setPassword(Encrypt.md5(dto.getNewPassowrd()));
+    userMapper.updateByPrimaryKeySelective(user);
+
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void userMsgUpdate(UserMsgUpdateRequestDTO dto, String userId) {
+    User user = new User();
+    user.setId(userId);
+    List<User> select = userMapper.select(user);
+    user = select.get(0);
+    BeanUtils.copyProperties(dto, user);
+    userMapper.updateByPrimaryKeySelective(user);
   }
 }

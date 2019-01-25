@@ -1,14 +1,17 @@
 package com.graduation.blog.controller;
 
 import com.graduation.blog.domain.User;
-import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
-import com.graduation.blog.domain.dto.LoginRequestDTO;
-import com.graduation.blog.domain.dto.LoginTokenResponseDTO;
-import com.graduation.blog.domain.dto.RefreshTokenRequestDTO;
-import com.graduation.blog.domain.dto.RefreshTokenResponseDTO;
-import com.graduation.blog.domain.dto.RegisterRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.LoginRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.RefreshTokenRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.RegisterRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.UserMsgUpdateRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.UserPwdUpdateRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.LoginTokenResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.RefreshTokenResponseDTO;
 import com.graduation.blog.security.TokenGenerator;
 import com.graduation.blog.service.UserService;
+import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/user")
-@Api(value = "用户查询", tags = "用户查询")
+@Api(value = "用户模块", tags = "用户模块")
 public class UserController {
 
   @Autowired
@@ -85,5 +88,29 @@ public class UserController {
   }
 
 
+
+  /**
+   * 用户基本信息修改
+   */
+  @ApiOperation(value = "用户基本信息修改", notes = "用户基本信息修改")
+  @RequestMapping(value = "userMsgUpdate", method = RequestMethod.POST)
+  public Result userMsgUpdate(@RequestBody @Valid UserMsgUpdateRequestDTO dto) {
+    // 获得当前用户的id
+    String currentUserId = ContextUtil.getCurrentUserId();
+    userService.userMsgUpdate(dto, currentUserId);
+    return Result.success();
+  }
+
+
+  /**
+   * 用户密码修改
+   */
+  @ApiOperation(value = "用户密码修改", notes = "用户密码修改")
+  @RequestMapping(value = "userPwdUpdate", method = RequestMethod.POST)
+  public Result userPwdUpdate(@RequestBody @Valid UserPwdUpdateRequestDTO dto) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    userService.userPwdUpdate(dto, currentUserId);
+    return Result.success();
+  }
 
 }

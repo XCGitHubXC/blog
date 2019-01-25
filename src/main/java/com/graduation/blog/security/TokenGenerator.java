@@ -2,9 +2,9 @@ package com.graduation.blog.security;
 
 
 import com.google.common.collect.Maps;
-import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
-import com.graduation.blog.domain.dto.LoginTokenResponseDTO;
-import com.graduation.blog.domain.dto.RefreshTokenResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.LoginTokenResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.RefreshTokenResponseDTO;
 import com.graduation.blog.utils.AppException;
 import com.graduation.blog.utils.ErrorCode;
 import com.graduation.blog.utils.Java8DateUtil;

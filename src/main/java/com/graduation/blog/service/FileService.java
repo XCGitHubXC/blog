@@ -1,6 +1,6 @@
 package com.graduation.blog.service;
 
-import com.graduation.blog.domain.dto.FileUploadResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.FileUploadResponseDTO;
 import java.io.File;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;

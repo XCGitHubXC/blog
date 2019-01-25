@@ -1,4 +1,4 @@
-package com.graduation.blog.domain.dto;
+package com.graduation.blog.domain.dto.responsedto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

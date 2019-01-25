@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.graduation.blog.constants.ValidateMessage;
 import com.graduation.blog.dao.FileInfoMapper;
 import com.graduation.blog.domain.FileInfo;
-import com.graduation.blog.domain.dto.FileUploadResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.FileUploadResponseDTO;
 import com.graduation.blog.enums.PlatformEnum;
 import com.graduation.blog.enums.StatusEnum;
 import com.graduation.blog.service.FileService;

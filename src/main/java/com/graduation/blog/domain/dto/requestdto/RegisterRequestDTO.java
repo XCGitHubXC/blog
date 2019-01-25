@@ -1,4 +1,4 @@
-package com.graduation.blog.domain.dto;
+package com.graduation.blog.domain.dto.requestdto;
 
 import com.graduation.blog.constants.ValidateMessage;
 import io.swagger.annotations.ApiModel;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
- * 用户密码登录dto
+ * 用户注册dto
  *
  */
 @ApiModel("用户注册dto")

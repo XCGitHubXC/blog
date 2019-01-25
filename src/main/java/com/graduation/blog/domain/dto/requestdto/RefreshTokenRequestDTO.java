@@ -1,4 +1,4 @@
-package com.graduation.blog.domain.dto;
+package com.graduation.blog.domain.dto.requestdto;
 
 import com.graduation.blog.constants.ValidateMessage;
 import io.swagger.annotations.ApiModel;
