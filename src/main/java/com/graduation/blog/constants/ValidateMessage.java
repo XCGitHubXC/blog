@@ -76,10 +76,6 @@ public class ValidateMessage {
   public static final String EMAIL_NOT_BLANK = "{email.notBlank}";
   /** 邮箱验证码不能为空 */
   public static final String EMAIL_CODE_NOT_BLANK = "{emailCode.notBlank}";
-  /** 企业组织机构代码为空 */
-  public static final String ORG_CODE_NOT_BLANK = "{orgCode.notBlank}";
-  /** 企业组织机构名称为空 */
-  public static final String ORG_NAME_NOT_BLANK = "{orgName.notBlank}";
   /** 身份证编码为空 */
   public static final String ID_CARD_NOT_BLANK = "{idCard.notBlank}";
   /** 姓名为空 */

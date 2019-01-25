@@ -3,6 +3,7 @@ package com.graduation.blog.service;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
 import com.graduation.blog.domain.dto.LoginRequestDTO;
+import com.graduation.blog.domain.dto.RegisterRequestDTO;
 import java.util.List;
 
 /**
@@ -23,9 +24,15 @@ public interface UserService {
   LoginInfoResponseDTO login(LoginRequestDTO dto);
 
   /**
-   * 用户名密码登录
+   * 所有用户
    */
   List<User> listUser();
+
+  /**
+   * 用户注册
+   */
+  void userRegister(RegisterRequestDTO dto);
+
 
 
 }

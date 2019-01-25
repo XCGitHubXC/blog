@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 刷新成功令牌
  * 
- * @author weibo
+ *
  *
  */
 @Data

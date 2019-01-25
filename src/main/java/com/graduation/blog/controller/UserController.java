@@ -6,6 +6,7 @@ import com.graduation.blog.domain.dto.LoginRequestDTO;
 import com.graduation.blog.domain.dto.LoginTokenResponseDTO;
 import com.graduation.blog.domain.dto.RefreshTokenRequestDTO;
 import com.graduation.blog.domain.dto.RefreshTokenResponseDTO;
+import com.graduation.blog.domain.dto.RegisterRequestDTO;
 import com.graduation.blog.security.TokenGenerator;
 import com.graduation.blog.service.UserService;
 import com.graduation.blog.utils.Result;
@@ -66,11 +67,23 @@ public class UserController {
    * 用户名密码登录
    */
   @ApiOperation(value = "用户名密码登录", notes = "用户名密码登录")
-  @RequestMapping(value = "login", method = RequestMethod.POST)
-  public Result<LoginTokenResponseDTO> login(@RequestBody @Valid LoginRequestDTO dto) {
+  @RequestMapping(value = "userLogin", method = RequestMethod.POST)
+  public Result<LoginTokenResponseDTO> userLogin(@RequestBody @Valid LoginRequestDTO dto) {
     LoginInfoResponseDTO loginInfo = userService.login(dto);
     LoginTokenResponseDTO res = tokenGenerator.generateLoginToken(loginInfo);
     return Result.success(res);
   }
+
+  /**
+   * 用户注册
+   */
+  @ApiOperation(value = "用户注册", notes = "用户注册")
+  @RequestMapping(value = "userRegister", method = RequestMethod.POST)
+  public Result userRegister(@RequestBody @Valid RegisterRequestDTO dto) {
+    userService.userRegister(dto);
+    return Result.success();
+  }
+
+
 
 }

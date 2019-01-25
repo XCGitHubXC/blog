@@ -4,15 +4,19 @@ import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
 import com.graduation.blog.domain.dto.LoginRequestDTO;
+import com.graduation.blog.domain.dto.RegisterRequestDTO;
 import com.graduation.blog.enums.PlatformEnum;
 import com.graduation.blog.service.UserService;
+import com.graduation.blog.utils.AppException;
 import com.graduation.blog.utils.Assert;
 import com.graduation.blog.utils.BeanConvertUtils;
+import com.graduation.blog.utils.CommonsUtils;
 import com.graduation.blog.utils.Encrypt;
 import com.graduation.blog.utils.ErrorCode;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author: 成都 夏川
@@ -50,5 +54,18 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<User> listUser() {
     return userMapper.selectAll();
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void userRegister(RegisterRequestDTO dto) {
+    User user = BeanConvertUtils.copyBean(dto, User.class);
+    user.setId(CommonsUtils.get32BitUUID());
+    // 普通用户
+    user.setAuthority("0");
+    int insert = userMapper.insert(user);
+    if (1 != insert) {
+      throw new AppException(ErrorCode.FAIL_DATABASE, "注册失败");
+    }
   }
 }

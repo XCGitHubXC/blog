@@ -11,8 +11,8 @@ import lombok.Data;
 
 /**
  * 用户密码登录dto
- * 
- * @author weibo
+ *
+ *
  */
 @ApiModel("用户密码登录dto")
 @Data
