@@ -11,4 +11,11 @@ public interface UserMapper extends MyMapper<User> {
    * 用户名密码登录
    */
   User selectByLoginNameAndPwd(@Param("loginName")String loginName, @Param("password")String password);
+
+  /**
+   * 用户是否存在
+   */
+  User selectByLoginName(@Param("loginName")String loginName);
+
+
 }

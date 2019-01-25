@@ -1,5 +1,6 @@
 package com.graduation.blog.service.impl;
 
+import com.graduation.blog.constants.ValidateMessage;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.LoginInfoResponseDTO;
@@ -41,10 +42,13 @@ public class UserServiceImpl implements UserService {
     String password = dto.getPassword();
     String loginName = dto.getLoginName();
     PlatformEnum platform = dto.getPlatform();
+    User selectUser = userMapper.selectByLoginName(loginName);
+    // 用户不存在
+    Assert.isNotNull(selectUser, ErrorCode.USER_NOT_EXISTS, ValidateMessage.USER_NAME_NOT_EXISTS);
     // 密码md5加密
     password = Encrypt.md5(password);
     User user = userMapper.selectByLoginNameAndPwd(loginName, password);
-    Assert.isNotNull(user, ErrorCode.USER_NOT_EXISTS, "用户不存在");
+    Assert.isNotNull(user, ErrorCode.PASSWORD_IS_WRONG, ValidateMessage.PASSWORD_IS_WRONG);
     // 组装dto
     LoginInfoResponseDTO loginInfoResponseDTO = BeanConvertUtils
         .copyBean(user, LoginInfoResponseDTO.class);
@@ -60,6 +64,8 @@ public class UserServiceImpl implements UserService {
   @Transactional(rollbackFor = Exception.class)
   public void userRegister(RegisterRequestDTO dto) {
     User user = BeanConvertUtils.copyBean(dto, User.class);
+    String md5Password = Encrypt.md5(dto.getPassword());
+    user.setPassword(md5Password);
     user.setId(CommonsUtils.get32BitUUID());
     // 普通用户
     user.setAuthority("0");
