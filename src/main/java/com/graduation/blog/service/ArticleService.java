@@ -1,7 +1,10 @@
 package com.graduation.blog.service;
 
+import com.github.pagehelper.PageInfo;
+import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
 
 /**
  * @Author: xiachuan
@@ -26,6 +29,17 @@ public interface ArticleService {
    *  删除博文
    */
   void deleteBlog(String articleId);
+
+  /**
+   *  查询博文
+   */
+  Article selectBlog(String articleId);
+
+
+  /**
+   *  我的博文列表
+   */
+  PageInfo<Article> myBlogList(String userId, BlogsQueryRequestDTO blogsQueryRequestDTO);
 
 
 }

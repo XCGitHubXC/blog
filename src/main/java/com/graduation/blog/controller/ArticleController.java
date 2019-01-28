@@ -1,7 +1,10 @@
 package com.graduation.blog.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
 import com.graduation.blog.service.ArticleService;
 import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
@@ -63,5 +66,28 @@ public class ArticleController {
     return Result.success();
   }
 
+
+
+  /**
+   *  博文查询
+   */
+  @ApiOperation(value = "博文查询", notes = "博文查询")
+  @RequestMapping(value = "/selectBlog/{articleId}", method = RequestMethod.GET)
+  public Result<Article> selectBlog(@PathVariable String articleId) {
+    Article article = articleService.selectBlog(articleId);
+    return Result.success(article);
+  }
+
+
+  /**
+   *  我的博文列表
+   */
+  @ApiOperation(value = "我的博文列表", notes = "我的博文列表")
+  @RequestMapping(value = "/listBlog", method = RequestMethod.POST)
+  public Result<PageInfo<Article>> listBlog(@RequestBody BlogsQueryRequestDTO bqRquestDTO) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    PageInfo<Article> articlePageInfo = articleService.myBlogList(currentUserId, bqRquestDTO);
+    return Result.success(articlePageInfo);
+  }
 
 }

@@ -1,11 +1,14 @@
 package com.graduation.blog.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.graduation.blog.dao.ArticleMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
+import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
 import com.graduation.blog.enums.AuditClassEnum;
 import com.graduation.blog.enums.UserTypeEnum;
 import com.graduation.blog.service.ArticleService;
@@ -14,10 +17,12 @@ import com.graduation.blog.utils.Assert;
 import com.graduation.blog.utils.BeanConvertUtils;
 import com.graduation.blog.utils.CommonsUtils;
 import com.graduation.blog.utils.ErrorCode;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * @Author: xiachuan
@@ -65,5 +70,22 @@ public class ArticleServiceImpl implements ArticleService {
   @Transactional(rollbackFor = Exception.class)
   public void deleteBlog(String articleId) {
     articleMapper.deleteByPrimaryKey(articleId);
+  }
+
+  @Override
+  public Article selectBlog(String articleId) {
+    return articleMapper.selectByPrimaryKey(articleId);
+  }
+
+  @Override
+  public PageInfo<Article> myBlogList(String userId, BlogsQueryRequestDTO bqrDTO) {
+    Example example = new Example(Article.class);
+    example.createCriteria().andEqualTo("userId", userId)
+      .andEqualTo("status", "0").andEqualTo("audit", "1");
+    List<Article> articles = articleMapper.selectByExample(example);
+    PageInfo<Article> articlePageInfo = PageHelper.startPage(Integer.valueOf(bqrDTO.getStartNo()),
+        Integer.valueOf(bqrDTO.getPageSize()), true)
+        .doSelectPageInfo(() -> articleMapper.selectByExample(example));
+    return articlePageInfo;
   }
 }
