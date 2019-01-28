@@ -2,6 +2,7 @@ package com.graduation.blog.controller;
 
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.service.ArticleService;
+import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,13 +28,13 @@ public class ArticleController {
 
 
   /**
-   * 用户名密码登录
+   *  发表博文[待审核]
    */
-  @ApiOperation(value = "发表博文", notes = "发表博文")
+  @ApiOperation(value = "发表博文[待审核]", notes = "发表博文[待审核]")
   @RequestMapping(value = "publish", method = RequestMethod.POST)
   public Result userLogin(@RequestBody @Valid ArticlePublishRequestDTO dto) {
-
-
+    String currentUserId = ContextUtil.getCurrentUserId();
+    articleService.publishBlog(currentUserId, dto);
     return Result.success();
   }
 

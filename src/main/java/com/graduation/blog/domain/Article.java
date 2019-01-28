@@ -55,4 +55,9 @@ public class Article extends BaseObject {
   private String readNum;
 
 
+  /**
+   * 审核[0不通过, 1通过]
+   */
+  @ApiModelProperty(value = "审核[0不通过, 1通过, 2待审核]")
+  private String audit;
 }

@@ -17,6 +17,7 @@
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="audit" property="audit" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, title, content, file_id, article_type, type, read_num, status, remark, 

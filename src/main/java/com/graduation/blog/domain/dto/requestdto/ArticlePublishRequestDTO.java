@@ -42,14 +42,14 @@ public class ArticlePublishRequestDTO implements Serializable {
   /**
    * 文章类型
    */
-  @ApiModelProperty(value = "文章类型")
-  @NotBlank(message = "文章类型不能为空[原创(0)，转载(1)，翻译(2)]")
+  @ApiModelProperty(value = "文章类型[原创(0)，转载(1)，翻译(2)]")
+  @NotBlank(message = "文章类型不能为空")
   private String articleType;
 
   /**
    * 分类
    */
-  @ApiModelProperty(value = "分类")
+  @ApiModelProperty(value = "分类[请查询字典表]")
   @NotBlank(message = "文章分类不能为空")
   private String type;
 
