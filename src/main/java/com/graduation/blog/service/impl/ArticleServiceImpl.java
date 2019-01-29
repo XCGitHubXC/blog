@@ -73,8 +73,13 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @Transactional(rollbackFor = Exception.class)
   public Article selectBlog(String articleId) {
-    return articleMapper.selectByPrimaryKey(articleId);
+    Article article = articleMapper.selectByPrimaryKey(articleId);
+    String newReadNum = (Integer.valueOf(article.getReadNum()) + 1) + "";
+    article.setReadNum(newReadNum);
+    articleMapper.updateByPrimaryKeySelective(article);
+    return article;
   }
 
   @Override
