@@ -17,10 +17,10 @@ public class PageParam implements Serializable {
   private static final long serialVersionUID = -2434215078952977433L;
 
   /**
-   * 开始行号
+   *  第几页
    */
-  @ApiModelProperty(value = "开始行号")
-  private String startNo = "0";
+  @ApiModelProperty(value = "第几页")
+  private String pageNum = "1";
 
   /**
    * 每页记录数
