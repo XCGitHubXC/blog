@@ -15,6 +15,7 @@
     <result column="file_id" property="fileId" jdbcType="VARCHAR"/>
     <result column="gender" property="gender" jdbcType="VARCHAR"/>
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+    <result column="score" property="score" jdbcType="INTEGER"/>
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
