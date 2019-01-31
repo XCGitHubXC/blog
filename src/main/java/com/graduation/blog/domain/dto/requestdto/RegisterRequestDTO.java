@@ -80,7 +80,7 @@ public class RegisterRequestDTO implements Serializable {
   /**
    * 性别
    */
-  @ApiModelProperty(value = "[(0 女生),(1 男生)]")
+  @ApiModelProperty(value = "[(0 女生),(1 男生)]", required = true)
   private String gender;
 
   /**
