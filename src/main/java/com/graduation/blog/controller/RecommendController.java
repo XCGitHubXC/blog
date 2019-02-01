@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:
  **/
 @RestController
-@RequestMapping("/blog/recommend")
-@Api(value = "博文推荐", tags = "博文推荐")
+@RequestMapping("/recommend")
+@Api(value = "推荐模块", tags = "推荐模块")
 public class RecommendController {
 
   @Autowired
