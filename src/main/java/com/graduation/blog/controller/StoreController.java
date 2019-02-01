@@ -1,9 +1,15 @@
 package com.graduation.blog.controller;
 
 import com.graduation.blog.service.StoreService;
+import com.graduation.blog.utils.ContextUtil;
+import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,13 +19,34 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/user/store")
-@Api(value = "用户收藏", tags = "用户收藏")
+@Api(value = "收藏模块", tags = "收藏模块")
 public class StoreController {
 
   @Autowired
   private StoreService storeService;
 
+  /**
+   * 收藏文章
+   */
+  @ApiOperation(value = "收藏文章", notes = "收藏文章")
+  @RequestMapping(value = "/{articleId}", method = RequestMethod.GET)
+  public Result store(@PathVariable String articleId) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    storeService.storeBlog(currentUserId, articleId);
+    return Result.success();
+  }
 
+
+  /**
+   * 我的收藏
+   */
+  @ApiOperation(value = "我的收藏", notes = "我的收藏")
+  @RequestMapping(value = "/myStore", method = RequestMethod.GET)
+  public Result myStore() {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    List<String> strings = storeService.myStores(currentUserId);
+    return Result.success(strings);
+  }
 
 
 }
