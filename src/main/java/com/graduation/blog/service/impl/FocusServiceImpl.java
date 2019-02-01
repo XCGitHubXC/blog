@@ -34,6 +34,21 @@ public class FocusServiceImpl implements FocusService {
     focusMapper.insert(focus);
   }
 
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void cancelFocusUser(String curUserId, String focusUserId) {
+    Example example = new Example(Focus.class);
+    example.createCriteria().andEqualTo("userId", curUserId)
+        .andEqualTo("focusUserId", focusUserId)
+        .andEqualTo("status", "0");
+    List<Focus> foci = focusMapper.selectByExample(example);
+    if (null != foci) {
+      for (Focus f : foci) {
+        focusMapper.delete(f);
+      }
+    }
+  }
+
   /**
    * @Author :xiachuan
    * @Date :2019/2/1

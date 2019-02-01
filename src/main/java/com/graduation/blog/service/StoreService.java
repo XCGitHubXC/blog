@@ -15,6 +15,11 @@ public interface StoreService {
   void storeBlog(String curUserId, String articleId);
 
   /**
+   * 取消收藏文章
+   */
+  void cancelStoreBlog(String curUserId, String articleId);
+
+  /**
    * 我的收藏
    */
   List<String> myStores(String curUserId);

@@ -39,6 +39,18 @@ public class FocusController {
 
 
   /**
+   * 取消关注
+   */
+  @ApiOperation(value = "取消关注", notes = "取消关注")
+  @RequestMapping(value = "/cancel/{focusUserId}", method = RequestMethod.GET)
+  public Result cancelFocus(@PathVariable String focusUserId) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    focusService.cancelFocusUser(currentUserId, focusUserId);
+    return Result.success();
+  }
+
+
+  /**
    * 我的关注用户
    */
   @ApiOperation(value = "我的关注用户", notes = "我的关注用户")

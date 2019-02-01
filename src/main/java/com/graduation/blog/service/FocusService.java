@@ -14,6 +14,11 @@ public interface FocusService {
    */
   void focusUser(String curUserId, String focusUserId);
 
+  /**
+   * 取消关注
+   */
+  void cancelFocusUser(String curUserId, String focusUserId);
+
 
   /**
    * 我的关注用户

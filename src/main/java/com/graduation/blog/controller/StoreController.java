@@ -38,6 +38,18 @@ public class StoreController {
 
 
   /**
+   * 取消收藏文章
+   */
+  @ApiOperation(value = "取消收藏文章", notes = "取消收藏文章")
+  @RequestMapping(value = "/cancel/{articleId}", method = RequestMethod.GET)
+  public Result cancelArticle(@PathVariable String articleId) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    storeService.cancelStoreBlog(currentUserId, articleId);
+    return Result.success();
+  }
+
+
+  /**
    * 我的收藏
    */
   @ApiOperation(value = "我的收藏", notes = "我的收藏")

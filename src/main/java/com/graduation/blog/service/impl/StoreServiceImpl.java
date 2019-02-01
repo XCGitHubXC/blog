@@ -36,6 +36,21 @@ public class StoreServiceImpl implements StoreService {
   }
 
   @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void cancelStoreBlog(String curUserId, String articleId) {
+    Example example = new Example(Store.class);
+    example.createCriteria().andEqualTo("userId", curUserId)
+        .andEqualTo("articleId", articleId)
+        .andEqualTo("status", "0");
+    List<Store> stores = storeMapper.selectByExample(example);
+    if (null != stores) {
+      for (Store s : stores) {
+        storeMapper.delete(s);
+      }
+    }
+  }
+
+  @Override
   public List<String> myStores(String curUserId) {
     List<String> result = new ArrayList<>();
     Example example = new Example(Store.class);
