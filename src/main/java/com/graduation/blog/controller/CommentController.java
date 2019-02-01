@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:
  **/
 @RestController
-@RequestMapping("/user/comment")
-@Api(value = "用户评论", tags = "用户评论")
+@RequestMapping("/comment")
+@Api(value = "评论模块", tags = "评论模块")
 public class CommentController {
 
   @Autowired

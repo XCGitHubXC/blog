@@ -10,6 +10,7 @@
     <result column="article_type" property="articleType" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="read_num" property="readNum" jdbcType="VARCHAR" />
+    <result column="fabulous" property="fabulous" jdbcType="VARCHAR"/>
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
@@ -21,7 +22,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, title, content, file_id, article_type, type, read_num, status, remark, 
-    create_user, create_time, update_user, update_time, version
+    create_user, create_time, update_user, update_time, version, audit, fabulous
   </sql>
 
 </mapper>

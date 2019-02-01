@@ -54,6 +54,12 @@ public class Article extends BaseObject {
   @ApiModelProperty(value = "阅读数")
   private String readNum;
 
+  /**
+   * 点赞数
+   */
+  @ApiModelProperty(value = "点赞数")
+  private String fabulous;
+
 
   /**
    * 审核[0不通过, 1通过]
