@@ -49,4 +49,16 @@ public class FocusController {
     return Result.success(focusIds);
   }
 
+
+  /**
+   * 我的粉丝
+   */
+  @ApiOperation(value = "我的粉丝", notes = "我的粉丝")
+  @RequestMapping(value = "/myFans", method = RequestMethod.GET)
+  public Result<List<String>> myFans() {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    List<String> focusIds = focusService.myFans(currentUserId);
+    return Result.success(focusIds);
+  }
+
 }

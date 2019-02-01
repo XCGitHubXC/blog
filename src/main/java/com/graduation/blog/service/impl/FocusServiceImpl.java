@@ -34,6 +34,13 @@ public class FocusServiceImpl implements FocusService {
     focusMapper.insert(focus);
   }
 
+  /**
+   * @Author :xiachuan
+   * @Date :2019/2/1
+   * @Description : 我的关注
+   * @Param :[curUserId]
+   * @return :java.util.List<java.lang.String>
+   */
   @Override
   public List<String> myFocus(String curUserId) {
     List<String> result = new ArrayList<>();
@@ -46,6 +53,29 @@ public class FocusServiceImpl implements FocusService {
     }
     for (Focus f : foci) {
       result.add(f.getFocusUserId());
+    }
+    return result;
+  }
+
+  /**
+   * @Author :xiachuan
+   * @Date :2019/2/1
+   * @Description : 我的粉丝
+   * @Param :[curUserId]
+   * @return :java.util.List<java.lang.String>
+   */
+  @Override
+  public List<String> myFans(String curUserId) {
+    List<String> result = new ArrayList<>();
+    Example example = new Example(Focus.class);
+    example.createCriteria().andEqualTo("focusUserId", curUserId)
+        .andEqualTo("status", "0");
+    List<Focus> foci = focusMapper.selectByExample(example);
+    if (foci == null) {
+      return null;
+    }
+    for (Focus f : foci) {
+      result.add(f.getUserId());
     }
     return result;
   }
