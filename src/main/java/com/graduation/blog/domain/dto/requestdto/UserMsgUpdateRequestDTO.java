@@ -23,7 +23,7 @@ public class UserMsgUpdateRequestDTO implements Serializable {
   /**
    * 昵称
    */
-  @ApiModelProperty(value = "昵称", required = true)
+  @ApiModelProperty(value = "昵称")
   private String name;
 
   /**
