@@ -61,6 +61,12 @@ public class ArticleServiceImpl implements ArticleService {
     Assert.isNotNull(article, ErrorCode.RESULT_EMPTY, "该文章不存在");
     article.setAudit(auditBlogRequestDTO.getAuditStr());
     articleMapper.updateByPrimaryKeySelective(article);
+    // 博文审核通过，用户积分加1
+    if (auditBlogRequestDTO.getAuditStr().equals("1")) {
+      User blogUser = userMapper.selectByPrimaryKey(article.getUserId());
+      blogUser.setScore(blogUser.getScore() + 1);
+      userMapper.updateByPrimaryKeySelective(blogUser);
+    }
 
   }
 
