@@ -21,10 +21,16 @@ public class UserMsgUpdateRequestDTO implements Serializable {
 
 
   /**
+   * 姓名
+   */
+  @ApiModelProperty(value = "姓名")
+  private String name;
+
+  /**
    * 昵称
    */
   @ApiModelProperty(value = "昵称")
-  private String name;
+  private String nickName;
 
   /**
    * 简介

@@ -96,6 +96,11 @@ public class User extends BaseObject {
   private Integer score;
 
 
+  /**
+   * 昵称
+   */
+  @ApiModelProperty(value = "昵称")
+  private String nickName;
 
 
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
