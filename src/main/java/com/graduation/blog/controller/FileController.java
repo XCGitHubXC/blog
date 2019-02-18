@@ -1,5 +1,6 @@
 package com.graduation.blog.controller;
 
+import com.graduation.blog.config.CorsConfigure;
 import com.graduation.blog.constants.ValidateMessage;
 import com.graduation.blog.domain.dto.responsedto.FileUploadResponseDTO;
 import com.graduation.blog.service.FileService;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +36,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Validated
 @Slf4j
 @Api(value = "公用的文件上传接口", tags = "公用的文件上传接口")
+@CrossOrigin
 @RequestMapping(value = "/common/fileInfo")
-public class FileController {
+public class FileController extends CorsConfigure {
 
   @Resource
   private FileService fileService;
