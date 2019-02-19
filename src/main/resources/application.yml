@@ -30,3 +30,8 @@ file:
     document:
       dir: /data/document/
       pdfUrl: http://localhost:8080
+
+#配置日志
+logging:
+  level:
+    root: info
