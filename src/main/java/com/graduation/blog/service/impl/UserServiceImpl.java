@@ -125,7 +125,18 @@ public class UserServiceImpl implements UserService {
     List<User> select = userMapper.select(user);
     user = select.get(0);
     BeanUtils.copyProperties(dto, user);
-    int i = userMapper.updateByPrimaryKey(user);
+    int i = userMapper.updateByPrimaryKeySelective(user);
     log.info("跟新数量：{}", i);
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void userHeadUpdate(String fileId, String userId) {
+    User user = new User();
+    user.setId(userId);
+    List<User> select = userMapper.select(user);
+    user = select.get(0);
+    user.setFileId(fileId);
+    userMapper.updateByPrimaryKeySelective(user);
   }
 }

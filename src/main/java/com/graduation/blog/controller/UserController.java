@@ -42,7 +42,7 @@ public class UserController {
   private TokenGenerator tokenGenerator;
 
   @GetMapping("/select/{id}")
-  @ApiOperation(value = "查询用户", notes = "查询用户")
+  @ApiOperation(value = "用户资料", notes = "用户资料")
   public Result<User> selectByPrimKey(@PathVariable("id") String id) {
     User user = userService.selectUserById(id);
     return Result.success(user);
@@ -100,6 +100,19 @@ public class UserController {
     userService.userMsgUpdate(dto, currentUserId);
     return Result.success();
   }
+
+  /**
+   * 用户头像修改
+   */
+  @ApiOperation(value = "用户头像修改", notes = "用户头像修改")
+  @RequestMapping(value = "userHeadUpdate/{fileId}", method = RequestMethod.GET)
+  public Result userHeadUpdate(@PathVariable String fileId) {
+    // 获得当前用户的id
+    String currentUserId = ContextUtil.getCurrentUserId();
+    userService.userHeadUpdate(fileId, currentUserId);
+    return Result.success();
+  }
+
 
 
   /**

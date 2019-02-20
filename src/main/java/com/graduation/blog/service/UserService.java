@@ -47,5 +47,10 @@ public interface UserService {
    */
   void userMsgUpdate(UserMsgUpdateRequestDTO dto, String userId);
 
+  /**
+   * 用户头像修改
+   */
+  void userHeadUpdate(String fileId, String userId);
+
 
 }
