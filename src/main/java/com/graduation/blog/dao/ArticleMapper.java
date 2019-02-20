@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface ArticleMapper extends MyMapper<Article> {
 
+  /**
+   * 根据ids查询
+   */
   List<Article> selectByIds(List<String> ids);
 
 }

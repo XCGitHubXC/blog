@@ -1,6 +1,8 @@
 package com.graduation.blog.service;
 
-import java.util.List;
+import com.github.pagehelper.PageInfo;
+import com.graduation.blog.domain.User;
+import com.graduation.blog.domain.dto.PageParam;
 
 /**
  * @Author: xiachuan
@@ -23,11 +25,11 @@ public interface FocusService {
   /**
    * 我的关注用户
    */
-  List<String> myFocus(String curUserId);
+  PageInfo<User> myFocus(String curUserId, PageParam pageParam);
 
   /**
    * 我的粉丝
    */
-  List<String> myFans(String curUserId);
+  PageInfo<User> myFans(String curUserId, PageParam pageParam);
 
 }

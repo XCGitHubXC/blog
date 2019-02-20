@@ -3,6 +3,7 @@ package com.graduation.blog.dao;
 
 import com.graduation.blog.base.MyMapper;
 import com.graduation.blog.domain.User;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper extends MyMapper<User> {
@@ -18,4 +19,8 @@ public interface UserMapper extends MyMapper<User> {
   User selectByLoginName(@Param("loginName")String loginName);
 
 
+  /**
+   * 根据ids查询
+   */
+  List<User> selectByIds(List<String> ids);
 }

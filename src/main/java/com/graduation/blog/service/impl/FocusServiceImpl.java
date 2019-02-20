@@ -1,9 +1,12 @@
 package com.graduation.blog.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.graduation.blog.dao.FocusMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Focus;
 import com.graduation.blog.domain.User;
+import com.graduation.blog.domain.dto.PageParam;
 import com.graduation.blog.service.FocusService;
 import com.graduation.blog.utils.AppException;
 import com.graduation.blog.utils.CommonsUtils;
@@ -70,7 +73,7 @@ public class FocusServiceImpl implements FocusService {
    * @return :java.util.List<java.lang.String>
    */
   @Override
-  public List<String> myFocus(String curUserId) {
+  public PageInfo<User> myFocus(String curUserId, PageParam pageParam) {
     List<String> result = new ArrayList<>();
     Example example = new Example(Focus.class);
     example.createCriteria().andEqualTo("userId", curUserId)
@@ -82,7 +85,10 @@ public class FocusServiceImpl implements FocusService {
     for (Focus f : foci) {
       result.add(f.getFocusUserId());
     }
-    return result;
+    PageInfo<User> userPageInfo = PageHelper.startPage(Integer.valueOf(pageParam.getPageNum()),
+        Integer.valueOf(pageParam.getPageSize()), true)
+        .doSelectPageInfo(() -> userMapper.selectByIds(result));
+    return userPageInfo;
   }
 
   /**
@@ -93,7 +99,7 @@ public class FocusServiceImpl implements FocusService {
    * @return :java.util.List<java.lang.String>
    */
   @Override
-  public List<String> myFans(String curUserId) {
+  public PageInfo<User> myFans(String curUserId, PageParam pageParam) {
     List<String> result = new ArrayList<>();
     Example example = new Example(Focus.class);
     example.createCriteria().andEqualTo("focusUserId", curUserId)
@@ -105,6 +111,9 @@ public class FocusServiceImpl implements FocusService {
     for (Focus f : foci) {
       result.add(f.getUserId());
     }
-    return result;
+    PageInfo<User> userPageInfo = PageHelper.startPage(Integer.valueOf(pageParam.getPageNum()),
+        Integer.valueOf(pageParam.getPageSize()), true)
+        .doSelectPageInfo(() -> userMapper.selectByIds(result));
+    return userPageInfo;
   }
 }

@@ -43,4 +43,10 @@
   </select>
 
 
+  <select id="selectByIds" resultMap="BaseResultMap" >
+    select * from user where id IN
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
 </mapper>
