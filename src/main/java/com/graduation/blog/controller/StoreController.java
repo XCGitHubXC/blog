@@ -1,13 +1,16 @@
 package com.graduation.blog.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.graduation.blog.domain.Article;
+import com.graduation.blog.domain.dto.PageParam;
 import com.graduation.blog.service.StoreService;
 import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,11 +56,11 @@ public class StoreController {
    * 我的收藏
    */
   @ApiOperation(value = "我的收藏", notes = "我的收藏")
-  @RequestMapping(value = "/myStore", method = RequestMethod.GET)
-  public Result myStore() {
+  @RequestMapping(value = "/myStore", method = RequestMethod.POST)
+  public Result myStore(@RequestBody PageParam pageParam) {
     String currentUserId = ContextUtil.getCurrentUserId();
-    List<String> strings = storeService.myStores(currentUserId);
-    return Result.success(strings);
+    PageInfo<Article> articles = storeService.myStores(currentUserId, pageParam);
+    return Result.success(articles);
   }
 
 

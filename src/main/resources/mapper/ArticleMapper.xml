@@ -25,4 +25,10 @@
     create_user, create_time, update_user, update_time, version, audit, fabulous
   </sql>
 
+  <select id="selectByIds" resultMap="BaseResultMap" >
+    select * from article where id IN
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
 </mapper>

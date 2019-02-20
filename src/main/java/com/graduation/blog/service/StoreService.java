@@ -1,6 +1,8 @@
 package com.graduation.blog.service;
 
-import java.util.List;
+import com.github.pagehelper.PageInfo;
+import com.graduation.blog.domain.Article;
+import com.graduation.blog.domain.dto.PageParam;
 
 /**
  * @Author: xiachuan
@@ -22,6 +24,6 @@ public interface StoreService {
   /**
    * 我的收藏
    */
-  List<String> myStores(String curUserId);
+  PageInfo<Article> myStores(String curUserId, PageParam pageParam);
 
 }

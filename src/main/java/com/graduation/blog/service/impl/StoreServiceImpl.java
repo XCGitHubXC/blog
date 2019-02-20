@@ -1,7 +1,12 @@
 package com.graduation.blog.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.graduation.blog.dao.ArticleMapper;
 import com.graduation.blog.dao.StoreMapper;
+import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.Store;
+import com.graduation.blog.domain.dto.PageParam;
 import com.graduation.blog.service.StoreService;
 import com.graduation.blog.utils.CommonsUtils;
 import java.util.ArrayList;
@@ -23,6 +28,8 @@ public class StoreServiceImpl implements StoreService {
 
   @Autowired
   private StoreMapper storeMapper;
+  @Autowired
+  ArticleMapper articleMapper;
 
 
   @Override
@@ -51,18 +58,22 @@ public class StoreServiceImpl implements StoreService {
   }
 
   @Override
-  public List<String> myStores(String curUserId) {
+  public PageInfo<Article> myStores(String curUserId, PageParam pageParam) {
     List<String> result = new ArrayList<>();
     Example example = new Example(Store.class);
     example.createCriteria().andEqualTo("userId", curUserId)
         .andEqualTo("status", "0");
     List<Store> stores = storeMapper.selectByExample(example);
+
     if (stores == null) {
       return null;
     }
     for (Store s : stores) {
       result.add(s.getArticleId());
     }
-    return result;
+    PageInfo<Article> articlePageInfo = PageHelper.startPage(Integer.valueOf(pageParam.getPageNum()),
+        Integer.valueOf(pageParam.getPageSize()), true)
+        .doSelectPageInfo(() -> articleMapper.selectByIds(result));
+    return articlePageInfo;
   }
 }
