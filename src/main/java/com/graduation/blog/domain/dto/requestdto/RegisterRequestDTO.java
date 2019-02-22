@@ -89,8 +89,8 @@ public class RegisterRequestDTO implements Serializable {
   @ApiModelProperty(value = "生日")
   private Date birthday;
 
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
   }

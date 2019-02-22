@@ -64,8 +64,7 @@ public class StoreServiceImpl implements StoreService {
     example.createCriteria().andEqualTo("userId", curUserId)
         .andEqualTo("status", "0");
     List<Store> stores = storeMapper.selectByExample(example);
-
-    if (stores == null) {
+    if (0 == stores.size()) {
       return null;
     }
     for (Store s : stores) {

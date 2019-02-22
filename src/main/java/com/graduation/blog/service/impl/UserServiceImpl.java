@@ -92,6 +92,7 @@ public class UserServiceImpl implements UserService {
     }
     // 普通用户
     user.setAuthority("0");
+    user.setScore(1);
     int insert = userMapper.insert(user);
     if (1 != insert) {
       throw new AppException(ErrorCode.FAIL_DATABASE, "注册失败");

@@ -79,7 +79,7 @@ public class FocusServiceImpl implements FocusService {
     example.createCriteria().andEqualTo("userId", curUserId)
         .andEqualTo("status", "0");
     List<Focus> foci = focusMapper.selectByExample(example);
-    if (foci == null) {
+    if (foci.size() == 0) {
       return null;
     }
     for (Focus f : foci) {
