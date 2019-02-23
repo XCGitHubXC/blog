@@ -3,8 +3,10 @@ package com.graduation.blog.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.graduation.blog.dao.ArticleMapper;
+import com.graduation.blog.dao.FabulousMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
+import com.graduation.blog.domain.Fabulous;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
@@ -34,10 +36,11 @@ import tk.mybatis.mapper.entity.Example;
 public class ArticleServiceImpl implements ArticleService {
 
   @Autowired
-  ArticleMapper articleMapper;
+  private ArticleMapper articleMapper;
   @Autowired
-  UserMapper userMapper;
-
+  private UserMapper userMapper;
+  @Autowired
+  private FabulousMapper fabulousMapper;
 
 
   @Override
@@ -98,5 +101,34 @@ public class ArticleServiceImpl implements ArticleService {
         Integer.valueOf(bqrDTO.getPageSize()), true)
         .doSelectPageInfo(() -> articleMapper.selectByExample(example));
     return articlePageInfo;
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void fabulousBlog(String curUserId, String articleId) {
+    Example example = new Example(Fabulous.class);
+    example.createCriteria().andEqualTo("userId", curUserId)
+        .andEqualTo("articleId", articleId).andEqualTo("status", "0");
+    List<Fabulous> fabulous = fabulousMapper.selectByExample(example);
+    if (0 != fabulous.size()) {
+      throw new AppException(ErrorCode.RESULT_EMPTY, "已经点赞过该文章");
+    }
+    Fabulous fabulous1 = new Fabulous();
+    fabulous1.setId(CommonsUtils.get32BitUUID());
+    fabulous1.setArticleId(articleId);
+    fabulous1.setUserId(curUserId);
+    fabulousMapper.insert(fabulous1);
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void cancleFabulous(String curUserId, String articleId) {
+    Example example = new Example(Fabulous.class);
+    example.createCriteria().andEqualTo("userId", curUserId)
+        .andEqualTo("articleId", articleId).andEqualTo("status", "0");
+    List<Fabulous> fabulous = fabulousMapper.selectByExample(example);
+    if (0 != fabulous.size()) {
+      fabulousMapper.delete(fabulous.get(0));
+    }
   }
 }

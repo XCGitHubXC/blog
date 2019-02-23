@@ -90,4 +90,27 @@ public class ArticleController {
     return Result.success(articlePageInfo);
   }
 
+  /**
+   *  博文点赞
+   */
+  @ApiOperation(value = "博文点赞", notes = "博文点赞")
+  @RequestMapping(value = "/fabulousBlog/{articleId}", method = RequestMethod.GET)
+  public Result fabulousBlog(@PathVariable String articleId) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    articleService.fabulousBlog(currentUserId, articleId);
+    return Result.success();
+  }
+
+
+  /**
+   *  取消点赞
+   */
+  @ApiOperation(value = "取消点赞", notes = "取消点赞")
+  @RequestMapping(value = "/cancleFabulous/{articleId}", method = RequestMethod.GET)
+  public Result cancleFabulous(@PathVariable String articleId) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    articleService.cancleFabulous(currentUserId, articleId);
+    return Result.success();
+  }
+
 }

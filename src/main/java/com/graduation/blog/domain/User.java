@@ -102,6 +102,12 @@ public class User extends BaseObject {
   @ApiModelProperty(value = "昵称")
   private String nickName;
 
+  /**
+   * 访问量
+   */
+  @ApiModelProperty(value = "访问量")
+  private Integer pageView;
+
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

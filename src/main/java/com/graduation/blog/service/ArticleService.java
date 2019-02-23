@@ -41,5 +41,15 @@ public interface ArticleService {
    */
   PageInfo<Article> myBlogList(String userId, BlogsQueryRequestDTO blogsQueryRequestDTO);
 
+  /**
+   *  博文点赞
+   */
+  void fabulousBlog(String curUserId, String articleId);
+
+  /**
+   *  取消点赞
+   */
+  void cancleFabulous(String curUserId, String articleId);
+
 
 }
