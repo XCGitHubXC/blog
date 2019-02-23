@@ -6,6 +6,7 @@ import com.graduation.blog.domain.dto.requestdto.UserPwdUpdateRequestDTO;
 import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
 import com.graduation.blog.domain.dto.requestdto.LoginRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.RegisterRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.UserInfoStatisResponseDTO;
 import java.util.List;
 
 /**
@@ -52,5 +53,10 @@ public interface UserService {
    */
   void userHeadUpdate(String fileId, String userId);
 
+
+  /**
+   * 用户信息统计
+   */
+  UserInfoStatisResponseDTO userInfoStatistics(String curUserId, String userId);
 
 }

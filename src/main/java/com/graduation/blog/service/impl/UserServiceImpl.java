@@ -2,13 +2,22 @@ package com.graduation.blog.service.impl;
 
 import com.google.common.base.Strings;
 import com.graduation.blog.constants.ValidateMessage;
+import com.graduation.blog.dao.ArticleMapper;
+import com.graduation.blog.dao.CommentMapper;
+import com.graduation.blog.dao.FabulousMapper;
+import com.graduation.blog.dao.FocusMapper;
 import com.graduation.blog.dao.UserMapper;
+import com.graduation.blog.domain.Article;
+import com.graduation.blog.domain.Comment;
+import com.graduation.blog.domain.Fabulous;
+import com.graduation.blog.domain.Focus;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.LoginRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.RegisterRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.UserMsgUpdateRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.UserPwdUpdateRequestDTO;
 import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.UserInfoStatisResponseDTO;
 import com.graduation.blog.enums.PlatformEnum;
 import com.graduation.blog.service.UserService;
 import com.graduation.blog.utils.AppException;
@@ -23,6 +32,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * @Author: 成都 夏川
@@ -35,6 +45,14 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserMapper userMapper;
+  @Autowired
+  private ArticleMapper articleMapper;
+  @Autowired
+  private FocusMapper focusMapper;
+  @Autowired
+  private FabulousMapper fabulousMapper;
+  @Autowired
+  private CommentMapper commentMapper;
 
 
   @Override
@@ -139,5 +157,59 @@ public class UserServiceImpl implements UserService {
     user = select.get(0);
     user.setFileId(fileId);
     userMapper.updateByPrimaryKeySelective(user);
+  }
+
+  @Override
+  public UserInfoStatisResponseDTO userInfoStatistics(String curUserId, String userId) {
+    User user = userMapper.selectByPrimaryKey(userId);
+    UserInfoStatisResponseDTO uisrDTO = new UserInfoStatisResponseDTO();
+    uisrDTO.setNickName(user.getNickName());
+    uisrDTO.setFileId(user.getFileId());
+    uisrDTO.setScore(user.getScore() + "");
+    uisrDTO.setViewNum(user.getPageView() + "");
+    Example example = new Example(Article.class);
+    example.createCriteria().andEqualTo("userId", user.getId())
+        .andEqualTo("articleType", "0").andEqualTo("status", "0");
+    List<Article> articles = articleMapper.selectByExample(example);
+    uisrDTO.setOriginalNum(articles.size() + "");
+    Example example1 = new Example(Focus.class);
+    example1.createCriteria().andEqualTo("focusUserId", user.getId())
+        .andEqualTo("status", "0");
+    List<Focus> foci = focusMapper.selectByExample(example1);
+    uisrDTO.setFanNum(foci.size() + "");
+
+    Example example2 = new Example(Article.class);
+    example2.createCriteria().andEqualTo("userId", user.getId())
+        .andEqualTo("status", "0");
+    List<Article> articles2 = articleMapper.selectByExample(example2);
+    int fabulousNum = 0;
+    for (Article article : articles2) {
+      Example example3 = new Example(Fabulous.class);
+      example3.createCriteria().andEqualTo("articleId", article.getId())
+          .andEqualTo("status", "0");
+      List<Fabulous> fabulous = fabulousMapper.selectByExample(example3);
+      fabulousNum = fabulousNum + fabulous.size();
+    }
+    uisrDTO.setLikeNum(fabulousNum + "");
+
+    Example example4 = new Example(Comment.class);
+    example4.createCriteria().andEqualTo("userId", user.getId())
+        .andEqualTo("status", "0");
+    List<Comment> comments = commentMapper.selectByExample(example4);
+    uisrDTO.setCommentNum(comments.size() + "");
+
+    if (!curUserId.equals(userId)) {
+      Example example5 = new Example(Focus.class);
+      example5.createCriteria().andEqualTo("userId", curUserId)
+          .andEqualTo("focusUserId", userId).andEqualTo("status", "0");
+      List<Focus> foci1 = focusMapper.selectByExample(example5);
+      if (foci1.size() != 0) {
+        // 当前用户已经关注改用户
+        uisrDTO.setFocusFlag("1");
+      } else {
+        uisrDTO.setFocusFlag("0");
+      }
+    }
+    return uisrDTO;
   }
 }

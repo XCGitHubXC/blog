@@ -9,6 +9,7 @@ import com.graduation.blog.domain.dto.requestdto.UserPwdUpdateRequestDTO;
 import com.graduation.blog.domain.dto.responsedto.LoginInfoResponseDTO;
 import com.graduation.blog.domain.dto.responsedto.LoginTokenResponseDTO;
 import com.graduation.blog.domain.dto.responsedto.RefreshTokenResponseDTO;
+import com.graduation.blog.domain.dto.responsedto.UserInfoStatisResponseDTO;
 import com.graduation.blog.security.TokenGenerator;
 import com.graduation.blog.service.UserService;
 import com.graduation.blog.utils.ContextUtil;
@@ -131,11 +132,11 @@ public class UserController {
    */
   @ApiOperation(value = "用户信息统计", notes = "用户信息统计")
   @RequestMapping(value = "userInfoStatistics/{userId}", method = RequestMethod.GET)
-  public Result userInfoStatistics(@PathVariable String userId) {
-
-
-
-    return Result.success();
+  public Result<UserInfoStatisResponseDTO> userInfoStatistics(@PathVariable String userId) {
+    String currentUserId = ContextUtil.getCurrentUserId();
+    UserInfoStatisResponseDTO userInfoStatisResponseDTO = userService
+        .userInfoStatistics(currentUserId, userId);
+    return Result.success(userInfoStatisResponseDTO);
   }
 
 }
