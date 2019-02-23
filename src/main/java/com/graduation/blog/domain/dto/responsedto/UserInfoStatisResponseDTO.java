@@ -11,7 +11,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
-@ApiModel(value = "刷新成功令牌")
+@ApiModel(value = "用户信息统计")
 public class UserInfoStatisResponseDTO implements Serializable {
 
   private static final long serialVersionUID = 655012419834558463L;
