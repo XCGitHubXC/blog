@@ -2,6 +2,7 @@ package com.graduation.blog.domain.dto.responsedto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -11,7 +12,7 @@ import lombok.Data;
  **/
 @Data
 @ApiModel(value = "登录成功dto")
-public class LoginTokenResponseDTO {
+public class LoginTokenResponseDTO implements Serializable {
   private static final long serialVersionUID = 940644291147800571L;
 
   /**

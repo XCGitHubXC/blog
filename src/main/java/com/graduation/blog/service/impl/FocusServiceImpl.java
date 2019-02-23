@@ -40,6 +40,13 @@ public class FocusServiceImpl implements FocusService {
     if (user == null) {
       throw new AppException(ErrorCode.RESULT_EMPTY, "关注用户不存在");
     }
+    Example example = new Example(Focus.class);
+    example.createCriteria().andEqualTo("focusUserId", focusUserId)
+        .andEqualTo("userId", curUserId).andEqualTo("status", "0");
+    List<Focus> foci = focusMapper.selectByExample(example);
+    if (0 != foci.size()) {
+      throw new AppException(ErrorCode.RESULT_EMPTY, "该用户已经被关注");
+    }
     // 被关注这积分加1
     user.setScore(user.getScore() + 1);
     userMapper.updateByPrimaryKeySelective(user);
@@ -58,7 +65,7 @@ public class FocusServiceImpl implements FocusService {
         .andEqualTo("focusUserId", focusUserId)
         .andEqualTo("status", "0");
     List<Focus> foci = focusMapper.selectByExample(example);
-    if (null != foci) {
+    if (0 != foci.size()) {
       for (Focus f : foci) {
         focusMapper.delete(f);
       }
@@ -105,7 +112,7 @@ public class FocusServiceImpl implements FocusService {
     example.createCriteria().andEqualTo("focusUserId", curUserId)
         .andEqualTo("status", "0");
     List<Focus> foci = focusMapper.selectByExample(example);
-    if (foci == null) {
+    if (0 == foci.size()) {
       return null;
     }
     for (Focus f : foci) {
@@ -114,6 +121,21 @@ public class FocusServiceImpl implements FocusService {
     PageInfo<User> userPageInfo = PageHelper.startPage(Integer.valueOf(pageParam.getPageNum()),
         Integer.valueOf(pageParam.getPageSize()), true)
         .doSelectPageInfo(() -> userMapper.selectByIds(result));
+    List<User> userList = userPageInfo.getList();
+    for (User u : userList) {
+      Example example1 = new Example(Focus.class);
+      example1.createCriteria().andEqualTo("focusUserId", u.getId())
+          .andEqualTo("userId", curUserId).andEqualTo("status", "0");
+      List<Focus> foci1 = focusMapper.selectByExample(example);
+      if (0 == foci1.size()) {
+        // 我没有关注我的粉丝
+        u.setRemark("0");
+      } else {
+        // 我关注了我的粉丝
+        u.setRemark("1");
+      }
+    }
+    userPageInfo.setList(userList);
     return userPageInfo;
   }
 }
