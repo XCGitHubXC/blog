@@ -73,8 +73,6 @@ public class ArticleServiceImpl implements ArticleService {
 
   }
 
-
-
   @Override
   @Transactional(rollbackFor = Exception.class)
   public void deleteBlog(String articleId) {
@@ -85,6 +83,11 @@ public class ArticleServiceImpl implements ArticleService {
   @Transactional(rollbackFor = Exception.class)
   public Article selectBlog(String articleId) {
     Article article = articleMapper.selectByPrimaryKey(articleId);
+    Example example = new Example(Fabulous.class);
+    example.createCriteria().andEqualTo("articleId", articleId)
+        .andEqualTo("status", "0");
+    List<Fabulous> fabulous = fabulousMapper.selectByExample(example);
+    article.setFabulous(fabulous.size() + "");
     String newReadNum = (Integer.valueOf(article.getReadNum()) + 1) + "";
     article.setReadNum(newReadNum);
     articleMapper.updateByPrimaryKeySelective(article);
