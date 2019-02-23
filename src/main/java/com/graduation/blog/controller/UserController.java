@@ -126,4 +126,16 @@ public class UserController {
     return Result.success();
   }
 
+  /**
+   * 用户信息统计
+   */
+  @ApiOperation(value = "用户信息统计", notes = "用户信息统计")
+  @RequestMapping(value = "userInfoStatistics/{userId}", method = RequestMethod.GET)
+  public Result userInfoStatistics(@PathVariable String userId) {
+
+
+
+    return Result.success();
+  }
+
 }
