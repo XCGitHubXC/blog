@@ -126,7 +126,7 @@ public class FocusServiceImpl implements FocusService {
       Example example1 = new Example(Focus.class);
       example1.createCriteria().andEqualTo("focusUserId", u.getId())
           .andEqualTo("userId", curUserId).andEqualTo("status", "0");
-      List<Focus> foci1 = focusMapper.selectByExample(example);
+      List<Focus> foci1 = focusMapper.selectByExample(example1);
       if (0 == foci1.size()) {
         // 我没有关注我的粉丝
         u.setRemark("0");
