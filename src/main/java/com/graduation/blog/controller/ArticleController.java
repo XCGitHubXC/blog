@@ -3,6 +3,7 @@ package com.graduation.blog.controller;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.graduation.blog.domain.Article;
+import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
@@ -118,5 +119,17 @@ public class ArticleController {
     articleService.cancleFabulous(currentUserId, articleId);
     return Result.success();
   }
+
+  /**
+   *  博文编辑
+   */
+  @ApiOperation(value = "博文编辑", notes = "博文编辑")
+  @RequestMapping(value = "/editBlog", method = RequestMethod.POST)
+  public Result editBlog(@RequestBody ArticleEditRequestDTO aeRequestDTO) {
+    articleService.editBlog(aeRequestDTO);
+    return Result.success();
+  }
+
+
 
 }

@@ -55,7 +55,7 @@ public class SwaggerConfig {
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
         .title("Spring Boot中使用Swagger2构建RESTFUL APIS")
-        .description("Mos项目后台API接口文档")
+        .description("blog项目后台API接口文档")
         .version("1.0")
         .build();
   }

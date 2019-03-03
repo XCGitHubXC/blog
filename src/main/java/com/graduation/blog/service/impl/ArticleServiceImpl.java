@@ -8,6 +8,7 @@ import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.Fabulous;
 import com.graduation.blog.domain.User;
+import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
@@ -21,6 +22,7 @@ import com.graduation.blog.utils.CommonsUtils;
 import com.graduation.blog.utils.ErrorCode;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,8 @@ public class ArticleServiceImpl implements ArticleService {
     Article article = BeanConvertUtils.copyBean(articlePublishRequestDTO, Article.class);
     article.setId(CommonsUtils.get32BitUUID());
     article.setUserId(userId);
+    article.setReadNum("0");
+    article.setFabulous("0");
     article.setAudit(AuditClassEnum.WAIT_AUDIT.getCode());
     articleMapper.insert(article);
   }
@@ -132,5 +136,14 @@ public class ArticleServiceImpl implements ArticleService {
     if (0 != fabulous.size()) {
       fabulousMapper.delete(fabulous.get(0));
     }
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void editBlog(ArticleEditRequestDTO editRequestDTO) {
+    String articleId = editRequestDTO.getArticleId();
+    Article article = articleMapper.selectByPrimaryKey(articleId);
+    BeanUtils.copyProperties(editRequestDTO, article);
+    articleMapper.updateByPrimaryKeySelective(article);
   }
 }

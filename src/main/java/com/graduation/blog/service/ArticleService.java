@@ -2,6 +2,7 @@ package com.graduation.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import com.graduation.blog.domain.Article;
+import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
@@ -51,5 +52,8 @@ public interface ArticleService {
    */
   void cancleFabulous(String curUserId, String articleId);
 
-
+  /**
+   * 编辑博文
+   */
+  void editBlog(ArticleEditRequestDTO editRequestDTO);
 }
