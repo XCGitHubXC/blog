@@ -37,7 +37,7 @@ public interface ArticleService {
 
 
   /**
-   *  我的博文列表
+   *  用户博文列表
    */
   PageInfo<Article> myBlogList(String userId, BlogsQueryRequestDTO blogsQueryRequestDTO);
 

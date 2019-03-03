@@ -99,7 +99,6 @@ public class ArticleServiceImpl implements ArticleService {
     Example example = new Example(Article.class);
     example.createCriteria().andEqualTo("userId", userId)
       .andEqualTo("status", "0").andEqualTo("audit", "1");
-    List<Article> articles = articleMapper.selectByExample(example);
     PageInfo<Article> articlePageInfo = PageHelper.startPage(Integer.valueOf(bqrDTO.getPageNum()),
         Integer.valueOf(bqrDTO.getPageSize()), true)
         .doSelectPageInfo(() -> articleMapper.selectByExample(example));

@@ -1,6 +1,7 @@
 package com.graduation.blog.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Strings;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
@@ -82,11 +83,16 @@ public class ArticleController {
   /**
    *  我的博文列表
    */
-  @ApiOperation(value = "我的博文列表", notes = "我的博文列表")
+  @ApiOperation(value = "用户博文列表", notes = "用户博文列表")
   @RequestMapping(value = "/listBlog", method = RequestMethod.POST)
   public Result<PageInfo<Article>> listBlog(@RequestBody BlogsQueryRequestDTO bqRquestDTO) {
-    String currentUserId = ContextUtil.getCurrentUserId();
-    PageInfo<Article> articlePageInfo = articleService.myBlogList(currentUserId, bqRquestDTO);
+    PageInfo<Article> articlePageInfo = new PageInfo<>();
+    if (Strings.isNullOrEmpty(bqRquestDTO.getUserId())) {
+      String currentUserId = ContextUtil.getCurrentUserId();
+      articlePageInfo = articleService.myBlogList(currentUserId, bqRquestDTO);
+    } else {
+      articlePageInfo = articleService.myBlogList(bqRquestDTO.getUserId(), bqRquestDTO);
+    }
     return Result.success(articlePageInfo);
   }
 
