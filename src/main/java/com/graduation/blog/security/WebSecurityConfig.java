@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(WebSecurity web) throws Exception {
     web.ignoring()
         .antMatchers(DefaultErrorController.ERROR_PATH, "/auth/**", "/common/**", "/api1/**",
-            "/resources/static/**", "/user/userLogin/**", "/user/userRegister/**",
+            "/resources/static/**", "/user/userLogin/**", "/user/userRegister/**", "/recommend/**",
             "/download*", "/swagger-ui.html", "/webjars/**",
             "/swagger-resources/**", "/v2/**", "/api/areas/**",
             "/api/fileInfo/download/**", "/attachment/**");

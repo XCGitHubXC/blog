@@ -20,4 +20,17 @@
     version, type, article_type
   </sql>
 
+  <select id="recomBlogs" resultType="string">
+    select article_id from recommend where
+    type = '0' and status = '0' order by
+    create_time DESC LIMIT 10;
+  </select>
+
+  <select id="recomTypeBlogs" resultType="string" parameterType="string">
+    select article_id from recommend where
+    type = '0' and status = '0' and article_type = #{articleType}
+    order by create_time DESC LIMIT 10;
+  </select>
+
+
 </mapper>
