@@ -6,6 +6,7 @@
     <result column="article_id" property="articleId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR"/>
+    <result column="article_type" property="articleType" jdbcType="VARCHAR"/>
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, article_id, user_id, status, remark, create_user, create_time, update_user, update_time, 
-    version, type
+    version, type, article_type
   </sql>
 
 </mapper>

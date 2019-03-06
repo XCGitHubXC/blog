@@ -26,5 +26,11 @@ public class Recommend extends BaseObject {
   @ApiModelProperty("推荐类型[0文章，1用户]")
   private String type;
 
+  /**
+   * 博文类型
+   */
+  @ApiModelProperty("博文类型")
+  private String articleType;
+
 
 }
