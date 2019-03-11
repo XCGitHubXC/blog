@@ -32,7 +32,7 @@ public class RecommendController {
   @RequestMapping(value = "/recomUser", method = RequestMethod.GET)
   public Result recomUser() {
 
-    // 测试分支
+    // 测试分支 master
 
     // 测试分支 dev
     return Result.success();
