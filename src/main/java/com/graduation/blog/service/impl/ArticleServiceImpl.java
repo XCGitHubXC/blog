@@ -59,7 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
     article.setFabulous("0");
     // 需要审核
     // article.setAudit(AuditClassEnum.PASS.getCode());
-    // 不需要审核  dev1测试
+    // 不需要审核   master测试
     article.setAudit(AuditClassEnum.PASS.getCode());
     articleMapper.insert(article);
   }
