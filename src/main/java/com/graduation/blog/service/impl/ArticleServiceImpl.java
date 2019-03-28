@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.graduation.blog.dao.ArticleMapper;
 import com.graduation.blog.dao.FabulousMapper;
+import com.graduation.blog.dao.RecommendMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.Fabulous;
+import com.graduation.blog.domain.Recommend;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
@@ -43,6 +45,8 @@ public class ArticleServiceImpl implements ArticleService {
   private UserMapper userMapper;
   @Autowired
   private FabulousMapper fabulousMapper;
+  @Autowired
+  private RecommendMapper recommendMapper;
 
 
   @Override
@@ -53,8 +57,14 @@ public class ArticleServiceImpl implements ArticleService {
     article.setUserId(userId);
     article.setReadNum("0");
     article.setFabulous("0");
+
     //  需要审核
     article.setAudit(AuditClassEnum.WAIT_AUDIT.getCode());
+
+    // 需要审核
+    // article.setAudit(AuditClassEnum.WAIT_AUDIT.getCode());
+    // 不需要审核
+    article.setAudit(AuditClassEnum.PASS.getCode());
     articleMapper.insert(article);
   }
 
@@ -91,9 +101,23 @@ public class ArticleServiceImpl implements ArticleService {
     Example example = new Example(Fabulous.class);
     example.createCriteria().andEqualTo("articleId", articleId)
         .andEqualTo("status", "0");
+    // 查询博文点赞数量
     List<Fabulous> fabulous = fabulousMapper.selectByExample(example);
     article.setFabulous(fabulous.size() + "");
+    // 博文阅读数加一
     String newReadNum = (Integer.valueOf(article.getReadNum()) + 1) + "";
+    // 阅读数或者点赞数大于50，进入推荐表
+    if (Integer.valueOf(newReadNum) > 50
+        || Integer.valueOf(article.getFabulous()) > 50) {
+      Recommend recommend = new Recommend();
+      recommend.setId(CommonsUtils.get32BitUUID());
+      recommend.setArticleId(article.getId());
+      recommend.setStatus("0");
+      // 推荐的是博文
+      recommend.setType("0");
+      recommend.setArticleType(article.getType());
+      recommendMapper.insert(recommend);
+    }
     article.setReadNum(newReadNum);
     articleMapper.updateByPrimaryKeySelective(article);
     return article;

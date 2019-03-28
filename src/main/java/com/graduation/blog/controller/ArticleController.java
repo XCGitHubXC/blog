@@ -35,9 +35,9 @@ public class ArticleController {
 
 
   /**
-   *  发表博文[待审核]
+   *  发表博文
    */
-  @ApiOperation(value = "发表博文[待审核]", notes = "发表博文[待审核]")
+  @ApiOperation(value = "发表博文", notes = "发表博文")
   @RequestMapping(value = "publish", method = RequestMethod.POST)
   public Result publish(@RequestBody @Valid ArticlePublishRequestDTO dto) {
     String currentUserId = ContextUtil.getCurrentUserId();
