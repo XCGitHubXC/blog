@@ -57,6 +57,10 @@ public class ArticleServiceImpl implements ArticleService {
     article.setUserId(userId);
     article.setReadNum("0");
     article.setFabulous("0");
+
+
+
+
     // 需要审核
     // article.setAudit(AuditClassEnum.WAIT_AUDIT.getCode());
     // 不需要审核
