@@ -28,9 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring()
-        .antMatchers(DefaultErrorController.ERROR_PATH, "/auth/**", "/common/**", "/api1/**",
-            "/resources/static/**", "/user/userLogin/**", "/user/userRegister/**", "/recommend/**",
-            "/download*", "/swagger-ui.html", "/webjars/**",
+        .antMatchers(DefaultErrorController.ERROR_PATH, "/auth/**",
+            "/common/**", "/api1/**", "/resources/static/**",
+            "/user/userLogin/**", "/user/userRegister/**",
+            "/recommend/**", "/download*", "/swagger-ui.html",
+            "/webjars/**", "/article/blogSearch/**",
             "/swagger-resources/**", "/v2/**", "/api/areas/**",
             "/api/fileInfo/download/**", "/attachment/**");
   }

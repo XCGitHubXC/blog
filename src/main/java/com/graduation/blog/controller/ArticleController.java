@@ -12,6 +12,7 @@ import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,26 @@ public class ArticleController {
 
   @Autowired
   private ArticleService articleService;
+
+
+
+  /**
+   *  博文搜索
+   */
+  @ApiOperation(value = "博文搜索", notes = "博文搜索")
+  @RequestMapping(value = "/blogSearch/{keyword}", method = RequestMethod.GET)
+  public Result<List<Article>> blogSearch(@PathVariable String keyword) {
+    char[] chars = keyword.toCharArray();
+    StringBuffer keywordBuffer = new StringBuffer();
+    keywordBuffer.append('%');
+    for (char c : chars) {
+      keywordBuffer.append(c);
+      keywordBuffer.append('%');
+    }
+    keyword = new String(keywordBuffer);
+    List<Article> articles = articleService.blogSearch(keyword);
+    return Result.success(articles);
+  }
 
 
   /**

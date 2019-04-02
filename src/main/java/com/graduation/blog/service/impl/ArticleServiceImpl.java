@@ -50,6 +50,15 @@ public class ArticleServiceImpl implements ArticleService {
 
 
   @Override
+  public List<Article> blogSearch(String keyword) {
+    Example example = new Example(Article.class);
+    example.createCriteria().andLike("content", keyword)
+        .andEqualTo("status", "0");
+    List<Article> articles = articleMapper.selectByExample(example);
+    return articles;
+  }
+
+  @Override
   @Transactional(rollbackFor = Exception.class)
   public void publishBlog(String userId, ArticlePublishRequestDTO articlePublishRequestDTO) {
     Article article = BeanConvertUtils.copyBean(articlePublishRequestDTO, Article.class);

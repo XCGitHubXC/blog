@@ -6,6 +6,7 @@ import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
+import java.util.List;
 
 /**
  * @Author: xiachuan
@@ -14,6 +15,11 @@ import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
  */
 public interface ArticleService {
 
+
+  /**
+   * 博文搜索
+   */
+  List<Article> blogSearch(String keyword);
 
   /**
    *  发表博文
