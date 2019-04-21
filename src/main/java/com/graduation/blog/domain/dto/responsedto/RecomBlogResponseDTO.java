@@ -1,10 +1,12 @@
 package com.graduation.blog.domain.dto.responsedto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @Author: xiachuan
@@ -58,6 +60,13 @@ public class RecomBlogResponseDTO implements Serializable {
    */
   @ApiModelProperty(value = "昵称")
   private String nickName;
+
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+  public Date getCreateTime() {
+    return createTime;
+  }
 
 
 }
