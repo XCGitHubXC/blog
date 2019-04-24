@@ -19,6 +19,19 @@ public class RecomBlogResponseDTO implements Serializable {
 
   private static final long serialVersionUID = 6536796578192646294L;
 
+
+  /**
+   * 自增
+   */
+  @ApiModelProperty(value = "id")
+  private String id;
+
+
+  /**
+   * 用户id
+   */
+  @ApiModelProperty(value = "用户id")
+  private String userId;
   /**
    * 博文标题
    */
