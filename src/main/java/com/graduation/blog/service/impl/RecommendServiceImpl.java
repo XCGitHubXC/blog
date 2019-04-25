@@ -50,7 +50,7 @@ public class RecommendServiceImpl implements RecommendService {
       Article article = articleMapper.selectByPrimaryKey(blogId);
       User user = userMapper.selectByPrimaryKey(article.getUserId());
       BeanUtils.copyProperties(article, recomBlogResponseDTO);
-      BeanUtils.copyProperties(user, recomBlogResponseDTO);
+      // BeanUtils.copyProperties(user, recomBlogResponseDTO);
       Example example = new Example(Comment.class);
       example.createCriteria().andEqualTo("articleId", blogId)
           .andEqualTo("status", "0");
@@ -70,7 +70,7 @@ public class RecommendServiceImpl implements RecommendService {
       Article article = articleMapper.selectByPrimaryKey(blogId);
       User user = userMapper.selectByPrimaryKey(article.getUserId());
       BeanUtils.copyProperties(article, recomBlogResponseDTO);
-      BeanUtils.copyProperties(user, recomBlogResponseDTO);
+      // BeanUtils.copyProperties(user, recomBlogResponseDTO);
       Example example = new Example(Comment.class);
       example.createCriteria().andEqualTo("articleId", blogId)
           .andEqualTo("status", "0");
