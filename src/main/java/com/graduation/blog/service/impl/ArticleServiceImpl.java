@@ -3,6 +3,7 @@ package com.graduation.blog.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.graduation.blog.dao.ArticleMapper;
+import com.graduation.blog.dao.CommentMapper;
 import com.graduation.blog.dao.FabulousMapper;
 import com.graduation.blog.dao.RecommendMapper;
 import com.graduation.blog.dao.UserMapper;
@@ -14,6 +15,7 @@ import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.SelectBlogResponseDTO;
 import com.graduation.blog.enums.AuditClassEnum;
 import com.graduation.blog.enums.UserTypeEnum;
 import com.graduation.blog.service.ArticleService;
@@ -47,6 +49,8 @@ public class ArticleServiceImpl implements ArticleService {
   private FabulousMapper fabulousMapper;
   @Autowired
   private RecommendMapper recommendMapper;
+  @Autowired
+  private CommentMapper commentMapper;
 
 
   @Override
@@ -101,7 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   @Transactional(rollbackFor = Exception.class)
-  public Article selectBlog(String articleId) {
+  public SelectBlogResponseDTO selectBlog(String articleId, String curUserId) {
     Article article = articleMapper.selectByPrimaryKey(articleId);
     Example example = new Example(Fabulous.class);
     example.createCriteria().andEqualTo("articleId", articleId)
@@ -125,7 +129,31 @@ public class ArticleServiceImpl implements ArticleService {
     }
     article.setReadNum(newReadNum);
     articleMapper.updateByPrimaryKeySelective(article);
-    return article;
+
+    SelectBlogResponseDTO sBlog = new SelectBlogResponseDTO();
+    BeanUtils.copyProperties(article, sBlog);
+
+    int commentCount = commentMapper.selectCountByExample(example);
+    sBlog.setCommentNum(commentCount + "");
+
+    if (curUserId == null) {
+      sBlog.setFabulousFlag("0");
+    } else {
+      Example example1 = new Example(Fabulous.class);
+      example.createCriteria().andEqualTo("userId", curUserId)
+          .andEqualTo("articleId", articleId).andEqualTo("status", "0");
+      List<Fabulous> fabulous1 = fabulousMapper.selectByExample(example1);
+      if (0 != fabulous1.size()) {
+        // throw new AppException(ErrorCode.RESULT_EMPTY, "已经点赞过该文章");
+        sBlog.setFabulousFlag("1");
+      } else {
+        sBlog.setFabulousFlag("0");
+      }
+    }
+
+
+
+    return sBlog;
   }
 
   @Override

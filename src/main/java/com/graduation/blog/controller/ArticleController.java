@@ -7,6 +7,7 @@ import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.SelectBlogResponseDTO;
 import com.graduation.blog.service.ArticleService;
 import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
@@ -96,9 +97,18 @@ public class ArticleController {
    */
   @ApiOperation(value = "博文查询", notes = "博文查询")
   @RequestMapping(value = "/selectBlog/{articleId}", method = RequestMethod.GET)
-  public Result<Article> selectBlog(@PathVariable String articleId) {
-    Article article = articleService.selectBlog(articleId);
-    return Result.success(article);
+  public Result<SelectBlogResponseDTO> selectBlog(@PathVariable String articleId) {
+    String currentUserId = null;
+    SelectBlogResponseDTO slog = null;
+    try {
+      currentUserId = ContextUtil.getCurrentUserId();
+    } catch (Exception e) {
+      slog = articleService.selectBlog(articleId, currentUserId);
+    }
+    if (null == slog) {
+      slog = articleService.selectBlog(articleId, currentUserId);
+    }
+    return Result.success(slog);
   }
 
 

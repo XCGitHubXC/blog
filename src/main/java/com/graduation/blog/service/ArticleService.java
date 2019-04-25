@@ -6,6 +6,7 @@ import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.AuditBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.SelectBlogResponseDTO;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public interface ArticleService {
   /**
    *  查询博文
    */
-  Article selectBlog(String articleId);
+  SelectBlogResponseDTO selectBlog(String articleId, String curUser);
 
 
   /**
