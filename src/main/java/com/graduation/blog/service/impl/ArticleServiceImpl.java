@@ -56,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   public List<Article> blogSearch(String keyword) {
     Example example = new Example(Article.class);
-    example.createCriteria().andLike("content", keyword)
+    example.createCriteria().andLike("title", keyword)
         .andEqualTo("status", "0");
     List<Article> articles = articleMapper.selectByExample(example);
     return articles;
