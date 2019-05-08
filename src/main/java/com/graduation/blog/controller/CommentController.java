@@ -1,8 +1,8 @@
 package com.graduation.blog.controller;
 
-import com.graduation.blog.domain.Comment;
 import com.graduation.blog.domain.dto.requestdto.CommentBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ReplyCommRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.QueryCommResponseDTO;
 import com.graduation.blog.service.CommentService;
 import com.graduation.blog.utils.ContextUtil;
 import com.graduation.blog.utils.Result;
@@ -58,9 +58,9 @@ public class CommentController {
    */
   @ApiOperation(value = "查询文章的评论", notes = "查询文章的评论")
   @RequestMapping(value = "/selectComm/{articleId}", method = RequestMethod.GET)
-  public Result<List<Comment>> selectComms(@PathVariable String articleId) {
-    List<Comment> comments = commentService.selectComms(articleId);
-    return Result.success(comments);
+  public Result<List<QueryCommResponseDTO>> selectComms(@PathVariable String articleId) {
+    List<QueryCommResponseDTO> queryCommResponseDTOS = commentService.selectComms(articleId);
+    return Result.success(queryCommResponseDTOS);
   }
 
   /**
@@ -68,9 +68,9 @@ public class CommentController {
    */
   @ApiOperation(value = "查看回复", notes = "查看回复")
   @RequestMapping(value = "/selectReply/{commId}", method = RequestMethod.GET)
-  public Result<List<Comment>> selectReply(@PathVariable String commId) {
-    List<Comment> comments = commentService.selectReply(commId);
-    return Result.success(comments);
+  public Result<List<QueryCommResponseDTO>> selectReply(@PathVariable String commId) {
+    List<QueryCommResponseDTO> queryCommResponseDTOS = commentService.selectReply(commId);
+    return Result.success(queryCommResponseDTOS);
   }
 
 

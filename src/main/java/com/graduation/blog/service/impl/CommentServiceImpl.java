@@ -1,11 +1,15 @@
 package com.graduation.blog.service.impl;
 
 import com.graduation.blog.dao.CommentMapper;
+import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Comment;
+import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.CommentBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ReplyCommRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.QueryCommResponseDTO;
 import com.graduation.blog.service.CommentService;
 import com.graduation.blog.utils.CommonsUtils;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,8 @@ public class CommentServiceImpl implements CommentService {
 
   @Autowired
   private CommentMapper commentMapper;
+  @Autowired
+  private UserMapper userMapper;
 
 
   @Override
@@ -52,21 +58,49 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<Comment> selectComms(String articleId) {
+  public List<QueryCommResponseDTO> selectComms(String articleId) {
+
+    List<QueryCommResponseDTO> qcrDTOLists = new ArrayList<>();
     Example example = new Example(Comment.class);
     example.createCriteria().andEqualTo("articleId", articleId)
         .andEqualTo("pId", "0").andEqualTo("status", "0");
     List<Comment> comments = commentMapper.selectByExample(example);
-    return comments;
+    for (Comment c : comments) {
+      QueryCommResponseDTO queryCommResponseDTO = new QueryCommResponseDTO();
+      queryCommResponseDTO.setComment(c);
+      User user = userMapper.selectByPrimaryKey(c.getUserId());
+      queryCommResponseDTO.setUser(user);
+      example = new Example(Comment.class);
+      example.createCriteria().andEqualTo("pId", c.getId())
+          .andEqualTo("status", "0");
+      List<Comment> replyLists = commentMapper.selectByExample(example);
+      queryCommResponseDTO.setReplyCount(Integer.valueOf(replyLists.size()));
+      qcrDTOLists.add(queryCommResponseDTO);
+    }
+
+    return qcrDTOLists;
   }
 
   @Override
-  public List<Comment> selectReply(String commId) {
+  public List<QueryCommResponseDTO> selectReply(String commId) {
+    List<QueryCommResponseDTO> qcrDTOLists = new ArrayList<>();
     Example example = new Example(Comment.class);
     example.createCriteria().andEqualTo("pId", commId)
         .andEqualTo("status", "0");
     List<Comment> comments = commentMapper.selectByExample(example);
-    return comments;
+    for (Comment c : comments) {
+      QueryCommResponseDTO queryCommResponseDTO = new QueryCommResponseDTO();
+      queryCommResponseDTO.setComment(c);
+      User user = userMapper.selectByPrimaryKey(c.getUserId());
+      queryCommResponseDTO.setUser(user);
+      example = new Example(Comment.class);
+      example.createCriteria().andEqualTo("pId", c.getId())
+          .andEqualTo("status", "0");
+      List<Comment> replyLists = commentMapper.selectByExample(example);
+      queryCommResponseDTO.setReplyCount(Integer.valueOf(replyLists.size()));
+      qcrDTOLists.add(queryCommResponseDTO);
+    }
+    return qcrDTOLists;
   }
 
 

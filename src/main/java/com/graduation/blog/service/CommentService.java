@@ -1,8 +1,8 @@
 package com.graduation.blog.service;
 
-import com.graduation.blog.domain.Comment;
 import com.graduation.blog.domain.dto.requestdto.CommentBlogRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ReplyCommRequestDTO;
+import com.graduation.blog.domain.dto.responsedto.QueryCommResponseDTO;
 import java.util.List;
 
 /**
@@ -27,12 +27,12 @@ public interface CommentService {
   /**
    *  查询文章的评论
    */
-  List<Comment> selectComms(String articleId);
+  List<QueryCommResponseDTO> selectComms(String articleId);
 
 
   /**
    *  查询回复
    */
-  List<Comment> selectReply(String commId);
+  List<QueryCommResponseDTO> selectReply(String commId);
 
 }
