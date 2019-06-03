@@ -136,7 +136,7 @@ public class ArticleServiceImpl implements ArticleService {
     int commentCount = commentMapper.selectCountByExample(example);
     sBlog.setCommentNum(commentCount + "");
 
-    if (curUserId == null) {
+    if ("null".equals(curUserId)) {
       sBlog.setFabulousFlag("0");
     } else {
       Example example1 = new Example(Fabulous.class);

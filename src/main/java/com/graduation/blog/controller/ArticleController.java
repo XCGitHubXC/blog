@@ -96,15 +96,20 @@ public class ArticleController {
    *  博文查询
    */
   @ApiOperation(value = "博文查询", notes = "博文查询")
-  @RequestMapping(value = "/selectBlog/{articleId}", method = RequestMethod.GET)
-  public Result<SelectBlogResponseDTO> selectBlog(@PathVariable String articleId) {
-    String currentUserId = null;
+  @RequestMapping(value = "/selectBlog/{articleId}/{currentUserId}", method = RequestMethod.GET)
+  public Result<SelectBlogResponseDTO> selectBlog(@PathVariable String articleId,
+      @PathVariable String currentUserId) {
+
     SelectBlogResponseDTO slog = null;
-    try {
-      currentUserId = ContextUtil.getCurrentUserId();
-    } catch (Exception e) {
+
+    if ("null".equals(currentUserId)) {
       slog = articleService.selectBlog(articleId, currentUserId);
     }
+//    try {
+//      currentUserId = ContextUtil.getCurrentUserId();
+//    } catch (Exception e) {
+//      slog = articleService.selectBlog(articleId, currentUserId);
+//    }
     if (null == slog) {
       slog = articleService.selectBlog(articleId, currentUserId);
     }
