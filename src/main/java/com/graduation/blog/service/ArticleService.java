@@ -23,6 +23,11 @@ public interface ArticleService {
   List<Article> blogSearch(String keyword);
 
   /**
+   * 图片搜索
+   */
+  String picSearch(String fileId);
+
+  /**
    *  发表博文
    */
   void publishBlog(String userId, ArticlePublishRequestDTO articlePublishRequestDTO);

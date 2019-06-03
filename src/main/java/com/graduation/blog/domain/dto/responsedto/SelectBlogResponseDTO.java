@@ -33,5 +33,12 @@ public class SelectBlogResponseDTO extends Article implements Serializable {
   private String fabulousFlag;
 
 
+  /**
+   * 该博文是否可以收藏
+   */
+  @ApiModelProperty(value = "该博文是否可以收藏[1:已经收藏，0:未收藏]")
+  private String storeFlag;
+
+
 
 }

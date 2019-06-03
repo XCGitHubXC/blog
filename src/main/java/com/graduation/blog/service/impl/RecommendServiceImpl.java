@@ -10,7 +10,9 @@ import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.responsedto.RecomBlogResponseDTO;
 import com.graduation.blog.service.RecommendService;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,9 @@ public class RecommendServiceImpl implements RecommendService {
   public List<RecomBlogResponseDTO> recomBlogs() {
     List<String> recomBlogIds = recommendMapper.recomBlogs();
     List<RecomBlogResponseDTO> recomBlogResponseDTOS = new ArrayList<>();
-    for (String blogId : recomBlogIds) {
+    Set<String> recomBlogSet = new HashSet<String>();
+    recomBlogSet.addAll(recomBlogIds);
+    for (String blogId : recomBlogSet) {
       RecomBlogResponseDTO recomBlogResponseDTO = new RecomBlogResponseDTO();
       Article article = articleMapper.selectByPrimaryKey(blogId);
       User user = userMapper.selectByPrimaryKey(article.getUserId());
@@ -64,8 +68,11 @@ public class RecommendServiceImpl implements RecommendService {
   @Override
   public List<RecomBlogResponseDTO> recomTypeBlogs(String articleType) {
     List<String> recomBlogIds = recommendMapper.recomTypeBlogs(articleType);
+    Set<String> recomBlogSet = new HashSet<String>();
+    recomBlogSet.addAll(recomBlogIds);
+
     List<RecomBlogResponseDTO> recomBlogResponseDTOS = new ArrayList<>();
-    for (String blogId : recomBlogIds) {
+    for (String blogId : recomBlogSet) {
       RecomBlogResponseDTO recomBlogResponseDTO = new RecomBlogResponseDTO();
       Article article = articleMapper.selectByPrimaryKey(blogId);
       User user = userMapper.selectByPrimaryKey(article.getUserId());

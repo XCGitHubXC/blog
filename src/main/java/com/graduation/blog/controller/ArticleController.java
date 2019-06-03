@@ -55,6 +55,16 @@ public class ArticleController {
     return Result.success(articles);
   }
 
+  /**
+   *  图片搜索
+   */
+  @ApiOperation(value = "图片搜索", notes = "图片搜索")
+  @RequestMapping(value = "/picSearch/{fileId}", method = RequestMethod.GET)
+  public Result<String> picSearch(@PathVariable String fileId) {
+
+    return Result.success(articleService.picSearch(fileId));
+  }
+
 
   /**
    *  发表博文

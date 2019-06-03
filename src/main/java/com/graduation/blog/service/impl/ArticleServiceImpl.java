@@ -6,10 +6,12 @@ import com.graduation.blog.dao.ArticleMapper;
 import com.graduation.blog.dao.CommentMapper;
 import com.graduation.blog.dao.FabulousMapper;
 import com.graduation.blog.dao.RecommendMapper;
+import com.graduation.blog.dao.StoreMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.Fabulous;
 import com.graduation.blog.domain.Recommend;
+import com.graduation.blog.domain.Store;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.ArticleEditRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.ArticlePublishRequestDTO;
@@ -18,6 +20,8 @@ import com.graduation.blog.domain.dto.requestdto.BlogsQueryRequestDTO;
 import com.graduation.blog.domain.dto.responsedto.SelectBlogResponseDTO;
 import com.graduation.blog.enums.AuditClassEnum;
 import com.graduation.blog.enums.UserTypeEnum;
+import com.graduation.blog.imageutils.Fingerprint;
+import com.graduation.blog.imageutils.ImageGenerate;
 import com.graduation.blog.service.ArticleService;
 import com.graduation.blog.utils.AppException;
 import com.graduation.blog.utils.Assert;
@@ -26,6 +30,7 @@ import com.graduation.blog.utils.CommonsUtils;
 import com.graduation.blog.utils.ErrorCode;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +56,8 @@ public class ArticleServiceImpl implements ArticleService {
   private RecommendMapper recommendMapper;
   @Autowired
   private CommentMapper commentMapper;
+  @Autowired
+  private StoreMapper storeMapper;
 
 
   @Override
@@ -63,7 +70,33 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
-  @Transactional(rollbackFor = Exception.class)
+  public String picSearch(String fileId) {
+    List<Article> articles = articleMapper.selectAll();
+    String s1 = null;
+    String s2 = null;
+    try {
+      s1 = Fingerprint.getFingerprintPhash("C:\\data\\fileStorage\\blog\\"
+          + fileId + ".jpg");
+    } catch (Exception e) {
+      s1 = Fingerprint.getFingerprintPhash("C:\\data\\fileStorage\\blog\\"
+          + fileId + ".png");
+    }
+
+    for (Article article : articles) {
+      try {
+        s2 = Fingerprint.getFingerprintPhash("C:\\data\\fileStorage\\blog\\"
+            + article.getId() + ".jpg");
+      } catch (Exception e) {
+        continue;
+      }
+      if (Fingerprint.hammingDistance(s1, s2) <= 5) {
+        return article.getId();
+      }
+    }
+    return null;
+  }
+
+  @Override
   public void publishBlog(String userId, ArticlePublishRequestDTO articlePublishRequestDTO) {
     Article article = BeanConvertUtils.copyBean(articlePublishRequestDTO, Article.class);
     article.setId(CommonsUtils.get32BitUUID());
@@ -75,6 +108,18 @@ public class ArticleServiceImpl implements ArticleService {
     // 不需要审核   master测试
     article.setAudit(AuditClassEnum.PASS.getCode());
     articleMapper.insert(article);
+
+    // 处理文章中图片,生成图片存储在服务器中
+    try {
+      String content = article.getContent();
+      String s1 = StringUtils.substringAfter(content, "src=\"");
+      String s2 = StringUtils.substringBefore(s1, "\">");
+      ImageGenerate.generPic(s2, "C:/data/fileStorage/blog", article.getId() + ".jpg");
+
+    } catch (Exception e) {
+
+    }
+
   }
 
   @Override
@@ -138,9 +183,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     if ("null".equals(curUserId)) {
       sBlog.setFabulousFlag("0");
+      sBlog.setStoreFlag("0");
     } else {
       Example example1 = new Example(Fabulous.class);
-      example.createCriteria().andEqualTo("userId", curUserId)
+      example1.createCriteria().andEqualTo("userId", curUserId)
           .andEqualTo("articleId", articleId).andEqualTo("status", "0");
       List<Fabulous> fabulous1 = fabulousMapper.selectByExample(example1);
       if (0 != fabulous1.size()) {
@@ -148,6 +194,16 @@ public class ArticleServiceImpl implements ArticleService {
         sBlog.setFabulousFlag("1");
       } else {
         sBlog.setFabulousFlag("0");
+      }
+
+      Example example2 = new Example(Store.class);
+      example2.createCriteria().andEqualTo("userId", curUserId)
+          .andEqualTo("articleId", articleId).andEqualTo("status", "0");
+      List<Store> stores = storeMapper.selectByExample(example2);
+      if (0 != stores.size()) {
+        sBlog.setStoreFlag("1");
+      } else {
+        sBlog.setStoreFlag("0");
       }
     }
 
