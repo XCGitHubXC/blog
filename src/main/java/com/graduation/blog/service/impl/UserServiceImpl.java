@@ -6,11 +6,13 @@ import com.graduation.blog.dao.ArticleMapper;
 import com.graduation.blog.dao.CommentMapper;
 import com.graduation.blog.dao.FabulousMapper;
 import com.graduation.blog.dao.FocusMapper;
+import com.graduation.blog.dao.RecommendMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.Comment;
 import com.graduation.blog.domain.Fabulous;
 import com.graduation.blog.domain.Focus;
+import com.graduation.blog.domain.Recommend;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.requestdto.LoginRequestDTO;
 import com.graduation.blog.domain.dto.requestdto.RegisterRequestDTO;
@@ -53,11 +55,24 @@ public class UserServiceImpl implements UserService {
   private FabulousMapper fabulousMapper;
   @Autowired
   private CommentMapper commentMapper;
+  @Autowired
+  private RecommendMapper recommendMapper;
 
 
   @Override
   public User selectUserById(String id) {
-    return userMapper.selectByPrimaryKey(id);
+    User user = userMapper.selectByPrimaryKey(id);
+    user.setPageView(user.getPageView() + 1);
+    userMapper.updateByPrimaryKeySelective(user);
+
+    if (user.getPageView() > 30) {
+      Recommend recommend = new Recommend();
+      recommend.setId(CommonsUtils.get32BitUUID());
+      recommend.setUserId(user.getId());
+      recommend.setType("1");
+      recommendMapper.insert(recommend);
+    }
+    return user;
   }
 
   @Override
@@ -162,7 +177,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserInfoStatisResponseDTO userInfoStatistics(String curUserId, String userId) {
+
     User user = userMapper.selectByPrimaryKey(userId);
+    user.setPageView(user.getPageView() + 1);
+    userMapper.updateByPrimaryKeySelective(user);
+    // 用户访问量多的加入到推荐表中
+    if (user.getPageView() > 30) {
+      Recommend recommend = new Recommend();
+      recommend.setId(CommonsUtils.get32BitUUID());
+      recommend.setUserId(user.getId());
+      recommend.setType("1");
+      recommendMapper.insert(recommend);
+    }
+
     UserInfoStatisResponseDTO uisrDTO = new UserInfoStatisResponseDTO();
     uisrDTO.setNickName(user.getNickName());
     uisrDTO.setFileId(user.getFileId());

@@ -6,6 +6,7 @@ import com.graduation.blog.dao.RecommendMapper;
 import com.graduation.blog.dao.UserMapper;
 import com.graduation.blog.domain.Article;
 import com.graduation.blog.domain.Comment;
+import com.graduation.blog.domain.Recommend;
 import com.graduation.blog.domain.User;
 import com.graduation.blog.domain.dto.responsedto.RecomBlogResponseDTO;
 import com.graduation.blog.service.RecommendService;
@@ -40,6 +41,13 @@ public class RecommendServiceImpl implements RecommendService {
 
   @Override
   public List<User> recomUsers() {
+
+    Example example = new Example(Recommend.class);
+    example.createCriteria().andEqualTo("type", "1")
+        .andEqualTo("status", "0");
+    List<Recommend> recommends = recommendMapper.selectByExample(example);
+
+
     return null;
   }
 
